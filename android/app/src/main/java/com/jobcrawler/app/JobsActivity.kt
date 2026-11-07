@@ -228,8 +228,10 @@ class JobsActivity : Screen() {
                 if (chips.isNotEmpty()) addView(Ui.chips(context, *chips.toTypedArray()).apply { setPadding(0, dp(8), 0, 0) })
 
                 // When it was found and what Telegram did with it, coloured by how it went.
-                val tone = if (gulf) R.color.gulf else statusColor(row.status)
-                val status = if (gulf) "Emailed, not posted" else telegramStatus(row.status)
+                // LinkedIn Saudi & UAE posts to Telegram; the other Saudi/UAE sources only email.
+                val emailedOnly = gulf && item.source != com.jobcrawler.app.sources.LinkedInJobs.GULF_KEY
+                val tone = if (emailedOnly) R.color.gulf else statusColor(row.status)
+                val status = if (emailedOnly) "Emailed, not posted" else telegramStatus(row.status)
                 addView(Ui.row(context).apply {
                     setPadding(0, dp(8), 0, 0)
                     addView(Ui.dot(context, tone, 6))

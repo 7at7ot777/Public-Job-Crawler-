@@ -22,7 +22,7 @@ object Criteria {
         TOO_SENIOR("Too senior", "A title with one of these is dropped", Filters.DEFAULT_SENIORITY_EXCLUDE),
         EGYPT_PLACES("Counts as Egypt", "A posting naming one of these is in Egypt", Filters.DEFAULT_EGYPT_PLACES),
         BLOCKED_PLACES("Never these places", "A job placed in one of these is dropped", Filters.DEFAULT_BLOCKED_LOCATIONS),
-        GULF_SEARCH_PLACES("Saudi & UAE places to search", "Emailed, not posted. LinkedIn jobs is searched in each of these every 3 h", Defaults.gulfLocations),
+        GULF_SEARCH_PLACES("Saudi & UAE places to search", "Posted to Telegram under #Gulf. LinkedIn jobs is searched in each of these every 3 h", Defaults.gulfLocations),
         GULF_POST_PLACES("Saudi & UAE post places", "Hiring posts, once a day. Each post keyword × place is one paid Serper search", LinkedInPosts.GULF_LOCATIONS),
         ABROAD_PLACES(
             "Europe, Canada & Australia places",

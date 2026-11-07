@@ -27,7 +27,8 @@ import java.time.ZoneOffset
  * back to it ([windowSince]) and a longer cycle never loses a job.
  *
  * The same search runs a second time as [gulf]: Saudi and UAE places, every
- * three hours over the last day, for the CV email only.
+ * three hours over the last day, posted to Telegram under #Gulf like Egypt's
+ * jobs (no CV auto-email).
  */
 class LinkedInJobs(
     override val client: GuestClient = linkedInClient(),
@@ -237,7 +238,8 @@ class LinkedInJobs(
             places = Criteria.Kind.GULF_SEARCH_PLACES,
             timeWindow = GULF_TIME_WINDOW,
             cadence = Cadence(GULF_KEY, Limits.SLOW_SOURCE_EVERY_MS),
-            emailOnly = true,
+            // Posted to Telegram (#Gulf topic), not emailed: autoEmail follows emailOnly, so no CV goes out on its own.
+            emailOnly = false,
         )
 
         /** The search fragment: a list of <li> cards, padded with promos. */

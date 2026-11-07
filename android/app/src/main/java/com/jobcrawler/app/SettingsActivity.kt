@@ -453,7 +453,7 @@ class SettingsActivity : Screen() {
             Khamsat.KEY to ("خمسات · Khamsat requests" to "Every 30 min · requests whose title names your stack"),
             LinkedInPosts.KEY to ("LinkedIn hiring posts" to "Daily after 07:00 · paid search, capped"),
             Glassdoor.KEY to ("Glassdoor (through Google)" to "Daily after 07:00 · 8 paid searches (10 with Saudi & UAE) · Egypt, visa and remote abroad, Canada, Australia"),
-            LinkedInJobs.GULF_KEY to ("LinkedIn Saudi & UAE" to "Every 3 h · Saudi Arabia and the UAE over the last day · emailed, not posted"),
+            LinkedInJobs.GULF_KEY to ("LinkedIn Saudi & UAE" to "Every 3 h · Saudi Arabia and the UAE over the last day · posted to Telegram (#Gulf)"),
             LinkedInPosts.GULF_KEY to ("Saudi & UAE hiring posts" to "Daily after 07:00 · paid search · emailed, not posted"),
         )
 

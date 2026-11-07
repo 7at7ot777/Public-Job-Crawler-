@@ -378,7 +378,7 @@ class MainActivity : Activity() {
                 if (manual == null && at != null) row.copy(note = "${row.note} · by hand ${ago(at, now)}") else row
             }
 
-            // Saudi & UAE sources have their own card: they email, they never post.
+            // Saudi & UAE sources have their own card (LinkedIn Saudi & UAE posts to Telegram; the others only email).
             val rows = if (key in Mailer.AUTO_SOURCES) gulfRows else sourceRows
             rows.addView(View(this).apply { setBackgroundColor(getColor(R.color.divider)) },
                 LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 1)))

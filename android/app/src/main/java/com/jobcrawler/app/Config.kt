@@ -40,7 +40,7 @@ object Defaults {
         "Dokki, Giza, Egypt",
     )
 
-    /* Saudi Arabia and the UAE, searched on LinkedIn by gulf_jobs for the CV email: never the channel. */
+    /* Saudi Arabia and the UAE, searched on LinkedIn by gulf_jobs and posted to Telegram under #Gulf. */
     val gulfLocations = listOf("Saudi Arabia", "United Arab Emirates")
 
     // Worldwide and Gulf search on, LinkedIn's included. Still off: "linkedin_posts", "glassdoor",

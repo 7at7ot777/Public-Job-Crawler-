@@ -324,7 +324,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/manrope_semibold"
-                    android:text="Emailed, never posted"
+                    android:text="Saudi &amp; UAE jobs"
                     android:textColor="@color/textMuted"
                     android:textSize="13sp" />
 

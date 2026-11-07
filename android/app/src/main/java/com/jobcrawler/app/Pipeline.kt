@@ -213,7 +213,7 @@ class Pipeline(
             // LinkedIn "Worldwide", remote, hourly: jobs open to anyone or to EMEA/Egypt, on its own request budget.
             // Back on: its own hourly request budget (LinkedInRest.takeWorldwide), so it never spends Egypt's share.
             Spec(LinkedInWorldwide.KEY, 60, home = Region.WORLDWIDE, lanes = setOf(Lane.LINKEDIN)) { _ -> LinkedInWorldwide() },
-            // LinkedIn jobs in Saudi Arabia and the UAE (Criteria GULF_SEARCH_PLACES), every 3 hours over the last day: emailed, not posted.
+            // LinkedIn jobs in Saudi Arabia and the UAE (Criteria GULF_SEARCH_PLACES), every 3 hours over the last day: posted to Telegram under #Gulf.
             Spec(LinkedInJobs.GULF_KEY, SLOW, home = Region.GULF, lanes = setOf(Lane.LINKEDIN)) { _ -> LinkedInJobs.gulf() },
             // Saudi and UAE hiring posts: emailed, never posted.
             // OFF (2026-11-05): Serper source, disabled with LinkedIn posts. Gulf jobs come from the boards above (boardsGulf).
