@@ -605,7 +605,7 @@ the container's periodic lane at the app's rhythm:
 | `job_apis` | Adzuna, Jooble, Careerjet | **On**, twice a day, but each only once its free key is in `.env` (`ADZUNA_APP_ID`+`ADZUNA_APP_KEY`, `JOOBLE_API_KEY`, `CAREERJET_API_KEY`) |
 | `mostaql`, `khamsat` | The Arabic freelance boards' listings | **On, but not in the hosted schedule** (they answer a datacenter IP with a 202 bot challenge): gigs naming the CV's stack in English or Arabic, posted under `#Freelance` |
 | `career_sites` | Any company's careers sitemap + job pages | **On once `CAREER_SITES` names a site** (`id\|Company\|sitemap URL\|job URL regex[\|Location[\|Market]]`): JSON-LD or the page's heading and main text; a site's first run records what is open and sends none of it |
-| `linkedin_worldwide` | LinkedIn guest search, Worldwide + remote | **Off**, as in the app (it spends the Egypt search's LinkedIn patience): jobs open to anyone or to EMEA/Africa/Egypt |
+| `linkedin_worldwide` | LinkedIn guest search, Worldwide + remote | **On**, as in the app; hourly in the container's periodic lane (it spends the Egypt search's LinkedIn patience): jobs open to anyone or to EMEA/Africa/Egypt |
 | `glassdoor` | Glassdoor listings found on Google (Serper) | **Off**, as in the app: 8 paid searches a run (10 with `BOARDS_GULF`) under `SERPER_DAILY_CAP` |
 
 **Jobs abroad** (every worldwide source above) are kept only when remote and

@@ -20,8 +20,9 @@ export const LANE = '🌍 Remote, worldwide';
  * Remote LinkedIn jobs open to someone anywhere — or at least to EMEA,
  * Africa, Egypt or UTC+2/+3 — searched as "Worldwide" with LinkedIn's remote
  * filter (f_WT=2), with the Egypt search's keywords. Ported from the Android
- * app's LinkedInWorldwide.kt, and off by default there and here: it spends
- * LinkedIn's patience, which the Egypt search needs.
+ * app's LinkedInWorldwide.kt, and on there and here. It spends LinkedIn's
+ * patience, which the Egypt search needs, so the container runs it hourly
+ * (CRAWL_PERIODIC_SOURCES), not every pass.
  *
  * LinkedIn has no "accepts any country" filter, and most "Worldwide, remote"
  * results are remote inside one country. So each opened job passes two

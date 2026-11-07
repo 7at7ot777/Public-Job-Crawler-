@@ -128,8 +128,9 @@ class SettingsActivity : Screen() {
             // Arabic freelance gigs, filed under 💼 Freelance.
             Mostaql.KEY to findViewById(R.id.srcMostaql),
             Khamsat.KEY to findViewById(R.id.srcKhamsat),
-            // OFF (2026-11-05): LinkedIn worldwide job search stays off (switch commented out in activity_settings.xml too).
-            // LinkedInWorldwide.KEY to findViewById(R.id.srcLinkedinWorldwide),
+            // LinkedIn worldwide and LinkedIn Saudi & UAE: back on.
+            LinkedInWorldwide.KEY to findViewById(R.id.srcLinkedinWorldwide),
+            LinkedInJobs.GULF_KEY to findViewById(R.id.srcGulfJobs),
             // OFF (2026-11-05): LinkedIn posts and the Serper sources (switches commented out in activity_settings.xml too).
             // LinkedInPosts.KEY to findViewById(R.id.srcPosts),
             // Glassdoor.KEY to findViewById(R.id.srcGlassdoor),
@@ -452,6 +453,7 @@ class SettingsActivity : Screen() {
             Khamsat.KEY to ("خمسات · Khamsat requests" to "Every 30 min · requests whose title names your stack"),
             LinkedInPosts.KEY to ("LinkedIn hiring posts" to "Daily after 07:00 · paid search, capped"),
             Glassdoor.KEY to ("Glassdoor (through Google)" to "Daily after 07:00 · 8 paid searches (10 with Saudi & UAE) · Egypt, visa and remote abroad, Canada, Australia"),
+            LinkedInJobs.GULF_KEY to ("LinkedIn Saudi & UAE" to "Every 3 h · Saudi Arabia and the UAE over the last day · emailed, not posted"),
             LinkedInPosts.GULF_KEY to ("Saudi & UAE hiring posts" to "Daily after 07:00 · paid search · emailed, not posted"),
         )
 

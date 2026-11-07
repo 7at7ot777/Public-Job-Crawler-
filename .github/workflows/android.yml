@@ -3,8 +3,8 @@ name: Android APK
 # Builds the phone app in android/ when a push to main or android-app
 # changes it, and on demand. Other branches and pull requests do not build:
 # only those two branches feed the phone. A manual run on another branch
-# tests and builds it, and never publishes: Drive and android-latest only
-# ever get main's or android-app's APK.
+# tests and builds it, and never publishes: android-latest only ever gets
+# main's or android-app's APK. The Google Drive upload is switched off.
 # Every run uploads the APK as a workflow artifact (GitHub always zips
 # those). Every push also replaces the "android-latest" release, whose
 # asset is the bare APK, so the newest build is always one tap away:
@@ -95,9 +95,11 @@ jobs:
     needs: [test, build]
     runs-on: ubuntu-24.04
     env:
-      # Set once with `gh secret set RCLONE_CONF` (see android/README.md);
-      # without it the Drive upload is skipped and nothing else changes.
-      HAS_DRIVE: ${{ secrets.RCLONE_CONF != '' }}
+      # Drive upload switched off: the pipeline still tests, builds, uploads the
+      # workflow artifact and publishes the GitHub release, but nothing goes to
+      # Google Drive. To bring it back, restore:
+      #   HAS_DRIVE: ${{ secrets.RCLONE_CONF != '' }}
+      HAS_DRIVE: "false"
       DRIVE_FOLDER: YOUR_DRIVE_FOLDER_ID
 
     steps:

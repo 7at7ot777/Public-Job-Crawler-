@@ -149,8 +149,10 @@ in `FILTER_TITLE` and `support` in `FILTER_TECH`.
   the un-enriched tail is retried next pass, whose window still covers it). The
   request *rate* is the trigger: 12/min was throttled continuously, so the pass is one
   page per keyword×market at `REQUEST_DELAY_MS=15000` (4/min; `LINKEDIN_MAX_PAGES=1`,
-  `LINKEDIN_REMOTE_MAX_PAGES=1`). The search is Egypt only — 7 keywords × Egypt, Cairo,
-  Giza, Maadi, Heliopolis, Obour, no remote-only or Worldwide searches — so 42 searches
+  `LINKEDIN_REMOTE_MAX_PAGES=1`). The search is Egypt plus Saudi Arabia and the UAE
+  (rotated in with the Egypt places), no remote-only searches in `linkedin_jobs`; the
+  Worldwide search is its own source, `linkedin_worldwide`, hourly in the periodic lane —
+  with Egypt alone it was 42 searches
   without rotation (7 per run with it, under 2 min before
   detail fetches; 21 searches took ~6 min). Knobs: `REQUEST_DELAY_MS`, `CRAWL_INTERVAL_MINUTES` (10 in the
   container; it was 30 when a pass ran ~20 minutes, because a pass that fills its

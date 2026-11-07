@@ -38,11 +38,11 @@ object Criteria {
     }
 
     /* The search lists, shown under "What to search"; the rest decide what reaches you. */
-    // OFF (2026-11-05): Egypt and the Gulf only, posts and Serper off. Was also POST_KEYWORDS, POST_PLACES,
-    // GULF_SEARCH_PLACES, GULF_POST_PLACES and ABROAD_PLACES; each list's source is off.
-    val search = listOf(Kind.SEARCH_PLACES)
+    // Posts and Serper off: POST_KEYWORDS, POST_PLACES, GULF_POST_PLACES and ABROAD_PLACES stay hidden.
+    // GULF_SEARCH_PLACES is back: the LinkedIn Saudi & UAE search (gulf_jobs) is on.
+    val search = listOf(Kind.SEARCH_PLACES, Kind.GULF_SEARCH_PLACES)
     /** Kept (saved values, defaults), shown nowhere while their sources are off. */
-    val hidden = listOf(Kind.POST_KEYWORDS, Kind.POST_PLACES, Kind.GULF_SEARCH_PLACES, Kind.GULF_POST_PLACES, Kind.ABROAD_PLACES)
+    val hidden = listOf(Kind.POST_KEYWORDS, Kind.POST_PLACES, Kind.GULF_POST_PLACES, Kind.ABROAD_PLACES)
     val filters = listOf(Kind.TECH, Kind.TITLES, Kind.TOO_SENIOR, Kind.EGYPT_PLACES, Kind.GULF_PLACES, Kind.BLOCKED_PLACES, Kind.INELIGIBLE)
 
     /*

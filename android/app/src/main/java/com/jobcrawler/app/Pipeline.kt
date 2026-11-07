@@ -211,9 +211,11 @@ class Pipeline(
             Spec(Mostaql.KEY, Mostaql.EVERY_MS / 60_000, home = Region.FREELANCE) { _ -> Mostaql() },
             Spec(Khamsat.KEY, Khamsat.EVERY_MS / 60_000, home = Region.FREELANCE) { _ -> Khamsat() },
             // LinkedIn "Worldwide", remote, hourly: jobs open to anyone or to EMEA/Egypt, on its own request budget.
-            // OFF (2026-11-05): LinkedIn worldwide job search stays disabled (it starves the Egypt LinkedIn budget). Uncomment (and drop it from RETIRED) to bring it back.
-            // Spec(LinkedInWorldwide.KEY, 60, home = Region.WORLDWIDE, lanes = setOf(Lane.LINKEDIN)) { _ -> LinkedInWorldwide() },
-            // Saudi and UAE: emailed, never posted.
+            // Back on: its own hourly request budget (LinkedInRest.takeWorldwide), so it never spends Egypt's share.
+            Spec(LinkedInWorldwide.KEY, 60, home = Region.WORLDWIDE, lanes = setOf(Lane.LINKEDIN)) { _ -> LinkedInWorldwide() },
+            // LinkedIn jobs in Saudi Arabia and the UAE (Criteria GULF_SEARCH_PLACES), every 3 hours over the last day: emailed, not posted.
+            Spec(LinkedInJobs.GULF_KEY, SLOW, home = Region.GULF, lanes = setOf(Lane.LINKEDIN)) { _ -> LinkedInJobs.gulf() },
+            // Saudi and UAE hiring posts: emailed, never posted.
             // OFF (2026-11-05): Serper source, disabled with LinkedIn posts. Gulf jobs come from the boards above (boardsGulf).
             // Spec(LinkedInPosts.GULF_KEY, 60, home = Region.GULF, lanes = setOf(Lane.LINKEDIN, Lane.SERPER)) { _ -> LinkedInPosts.gulf() },
         )
@@ -224,13 +226,10 @@ class Pipeline(
          */
         val RETIRED: Map<String, Region> = mapOf(
             AbroadJobs.KEY to Region.WORLDWIDE,
-            LinkedInJobs.GULF_KEY to Region.GULF,
             // OFF (2026-11-05): LinkedIn posts and the Serper sources.
             LinkedInPosts.KEY to Region.EGYPT,
             Glassdoor.KEY to Region.EGYPT,
             LinkedInPosts.GULF_KEY to Region.GULF,
-            // OFF (2026-11-05): LinkedIn worldwide job search stays off.
-            LinkedInWorldwide.KEY to Region.WORLDWIDE,
             // Its registry home was Egypt (Region.MOSTLY_REMOTE still places its stored rows).
             AiData.KEY to Region.EGYPT,
         )

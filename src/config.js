@@ -478,6 +478,12 @@ export const config = {
     'Sheraton, Cairo, Egypt',
     'Mohandessin, Giza, Egypt',
     'Dokki, Giza, Egypt',
+    // The Gulf, back on: LinkedIn's Saudi Arabia and UAE results, tagged #Gulf.
+    // They still have to pass gulf-local-only (relocation, sponsorship or
+    // all-nationalities wording). With the rotation on, a run is still one
+    // place; twelve places only widen the rotation's window (rotationWindow).
+    'Saudi Arabia',
+    'United Arab Emirates',
   ]),
 
   /*
@@ -1488,11 +1494,13 @@ export const config = {
 
     /*
      * LinkedIn "Worldwide" with the remote filter: jobs open to anyone, or to
-     * EMEA/Africa/Egypt/UTC+2. Off by default, as in the Android app: every
-     * request comes out of the same LinkedIn patience the Egypt search needs.
+     * EMEA/Africa/Egypt/UTC+2. On, as in the Android app. Every request comes
+     * out of the same LinkedIn patience the Egypt search needs, so it runs in
+     * the periodic lane (hourly), not every pass; LINKEDIN_WORLDWIDE_ENABLED=false
+     * turns it off.
      */
     linkedin_worldwide: {
-      enabled: bool(process.env.LINKEDIN_WORLDWIDE_ENABLED, false),
+      enabled: bool(process.env.LINKEDIN_WORLDWIDE_ENABLED, true),
       maxDetails: int(process.env.LINKEDIN_WORLDWIDE_MAX_DETAILS, 8),
       cron: process.env.LINKEDIN_WORLDWIDE_CRON || '40 * * * *',
     },

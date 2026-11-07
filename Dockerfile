@@ -95,7 +95,7 @@ ENV NODE_HEAP_MB=128
 # until a key is in .env), Hacker News daily. Each is its own short process,
 # like every other source. mostaql and khamsat are left out: their boards
 # answer this host with a bot challenge (they work from the phone app).
-ENV CRAWL_PERIODIC_SOURCES="workable:1 recruitera:6 ats:12 ai_data:3 drjob:1 jobright:1 remote_feeds:3 jobgether:3 sponsor_boards:3 relocateme:3 job_apis:12 hn_hiring:24"
+ENV CRAWL_PERIODIC_SOURCES="workable:1 recruitera:6 ats:12 ai_data:3 drjob:1 linkedin_worldwide:1 jobright:1 remote_feeds:3 jobgether:3 sponsor_boards:3 relocateme:3 job_apis:12 hn_hiring:24"
 ENV CRAWL_RUN_AT_START="recruitera"
 
 # What and where to look, left to the defaults in src/config.js (Egypt only,

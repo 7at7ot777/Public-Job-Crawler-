@@ -28,11 +28,12 @@ class RegistryTest {
     @Test
     fun `the lanes are what they were`() {
         // OFF (2026-11-05): LinkedIn posts and the Serper sources are retired.
-        // OFF (2026-11-05): LinkedIn worldwide too.
-        assertEquals(setOf("linkedin_jobs"), Pipeline.keysOn(Pipeline.Lane.LINKEDIN))
+        // LinkedIn worldwide and LinkedIn Saudi & UAE are back on LinkedIn's lane.
+        assertEquals(setOf("linkedin_jobs", "linkedin_worldwide", "gulf_jobs"), Pipeline.keysOn(Pipeline.Lane.LINKEDIN))
         assertEquals(emptySet<String>(), Pipeline.keysOn(Pipeline.Lane.SERPER))
         assertEquals(listOf("LinkedIn"), Lanes.names("linkedin_jobs"))
-        assertEquals(emptyList<String>(), Lanes.names("linkedin_worldwide"))
+        assertEquals(listOf("LinkedIn"), Lanes.names("linkedin_worldwide"))
+        assertEquals(listOf("LinkedIn"), Lanes.names("gulf_jobs"))
         assertEquals(emptyList<String>(), Lanes.names("linkedin_posts"))
         assertEquals(emptyList<String>(), Lanes.names("wuzzuf"))
     }
@@ -65,8 +66,8 @@ class RegistryTest {
 
     @Test
     fun `retired sources are the registry's`() {
-        // The worldwide remote sources (except LinkedIn) are back on, so only these stay retired.
-        assertEquals(setOf("abroad_jobs", "gulf_jobs", "linkedin_posts", "glassdoor", "gulf_posts", "linkedin_worldwide", "ai_data"),
+        // Worldwide and Gulf search are back on, LinkedIn's included, so only these stay retired.
+        assertEquals(setOf("abroad_jobs", "linkedin_posts", "glassdoor", "gulf_posts", "ai_data"),
             Defaults.retiredSources,
         )
     }

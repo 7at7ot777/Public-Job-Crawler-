@@ -33,7 +33,7 @@ services:
       # hours. Named companies' career boards (ATS_BOARDS) every 12 hours,
       # twice a day.
       # Plus the sources ported from the Android app, at the app's rhythm (see the Dockerfile).
-      CRAWL_PERIODIC_SOURCES: "workable:1 vertex:1 recruitera:6 ats:12 ai_data:3 drjob:1 jobright:1 remote_feeds:3 jobgether:3 sponsor_boards:3 relocateme:3 job_apis:12 hn_hiring:24"
+      CRAWL_PERIODIC_SOURCES: "workable:1 vertex:1 recruitera:6 ats:12 ai_data:3 drjob:1 linkedin_worldwide:1 jobright:1 remote_feeds:3 jobgether:3 sponsor_boards:3 relocateme:3 job_apis:12 hn_hiring:24"
       CRAWL_RUN_AT_START: "recruitera"
       NODE_HEAP_MB: 128
       # What and where to look, left to the defaults in src/config.js (Egypt

@@ -40,14 +40,16 @@ object Defaults {
         "Dokki, Giza, Egypt",
     )
 
-    /* Outside Egypt, only Saudi Arabia and the UAE, and only for the CV email: never the channel. */
+    /* Saudi Arabia and the UAE, searched on LinkedIn by gulf_jobs for the CV email: never the channel. */
     val gulfLocations = listOf("Saudi Arabia", "United Arab Emirates")
 
-    // Worldwide remote sources back on (except LinkedIn worldwide). Still off: "linkedin_worldwide",
-    // "linkedin_posts", "glassdoor", "gulf_posts", "ai_data". (Gulf jobs come from the boards via boardsGulf.)
+    // Worldwide and Gulf search on, LinkedIn's included. Still off: "linkedin_posts", "glassdoor",
+    // "gulf_posts", "ai_data" (posts and the paid Serper sources).
     val sources = listOf(
         "linkedin_jobs", "wuzzuf", "tanqeeb", "workable", "careers", "recruitera", "ats", "drjob",
         "jobright", "relocateme", "remote_feeds", "jobgether", "hn_hiring", "sponsor_boards", "job_apis",
+        // LinkedIn worldwide (remote, open to anyone or EMEA/Egypt) and LinkedIn Saudi & UAE.
+        "linkedin_worldwide", "gulf_jobs",
         // Arabic freelance gigs (Region.FREELANCE).
         "mostaql", "khamsat",
     )

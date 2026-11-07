@@ -117,9 +117,9 @@
             <!-- Arabic freelance gigs (Region.FREELANCE). -->
             <Switch android:id="@+id/srcMostaql" style="@style/SwitchRow" />
             <Switch android:id="@+id/srcKhamsat" style="@style/SwitchRow" />
-            <!-- OFF (2026-11-05): LinkedIn worldwide job search stays off.
+            <!-- LinkedIn worldwide and LinkedIn Saudi & UAE (back on). -->
             <Switch android:id="@+id/srcLinkedinWorldwide" style="@style/SwitchRow" />
-            -->
+            <Switch android:id="@+id/srcGulfJobs" style="@style/SwitchRow" />
             <!-- OFF (2026-11-05): LinkedIn posts and the Serper sources.
             <Switch android:id="@+id/srcPosts" style="@style/SwitchRow" />
             <Switch android:id="@+id/srcGlassdoor" style="@style/SwitchRow" />
