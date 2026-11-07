@@ -70,7 +70,8 @@ architecture tour; this file is the operational detail that is easy to get wrong
   so a restart loop doesn't bill per boot — the loop script's own defaults now agree;
   local `--watch`: `LINKEDIN_POSTS_CRON=0 7 * * *`. `x_posts` and `glassdoor` run in
   the daily lane too (with `linkedin_posts`: 33 + 33 + 10 = 76 queries, under the cap);
-  `x_session` is on but does nothing until `X_AUTH_TOKEN` and `X_CT0` are set.
+  `x_session` (login cookies, account-lock risk) and `naukrigulf` (blocks datacentre IPs)
+  stay off.
 - Serper spend is capped in code (`SERPER_DAILY_CAP`, 100/day across both posts sources,
   counted in the store's `state` table) and paced by `SERPER_DELAY_MS` (1 s), not
   `REQUEST_DELAY_MS`. On the hosted `/tmp` database the count resets with the database,

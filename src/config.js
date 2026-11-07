@@ -779,8 +779,9 @@ export const config = {
      * client names which one broke instead of reporting an empty crawl.
      */
     x_session: {
-      // On, but inert whenever either cookie is missing; see isEnabled().
-      enabled: bool(process.env.X_SESSION_ENABLED, true),
+      // Off: it needs a signed-in account's cookies and X locks accounts it
+      // thinks are automated. Also off whenever either cookie is missing; see isEnabled().
+      enabled: bool(process.env.X_SESSION_ENABLED, false),
       authToken: (process.env.X_AUTH_TOKEN ?? '').trim(),
       ct0: (process.env.X_CT0 ?? '').trim(),
       keywords: list(process.env.X_SESSION_KEYWORDS, postKeywords),
@@ -944,10 +945,10 @@ export const config = {
      * location filter picks out of one unfiltered page just as well.
      */
     naukrigulf: {
-      // On. Placed by FILTER_LOCATIONS, since the search names no country.
-      // Blocks datacentre IPs, so it is not in the hosted lanes: it works from
-      // a residential IP (--source naukrigulf).
-      enabled: bool(process.env.NAUKRIGULF_ENABLED, true),
+      // Off: it blocks datacentre IPs (never answers the hosted server). Works
+      // from a residential IP with NAUKRIGULF_ENABLED=true. Placed by
+      // FILTER_LOCATIONS, since the search names no country.
+      enabled: bool(process.env.NAUKRIGULF_ENABLED, false),
       searchUrl:
         process.env.NAUKRIGULF_SEARCH_URL || 'https://www.naukrigulf.com/spapi/jobapi/search',
       /*
