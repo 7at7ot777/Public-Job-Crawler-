@@ -1,0 +1,148 @@
+name: Android APK
+
+# Builds the phone app in android/ when a push to main or android-app
+# changes it, and on demand. Other branches and pull requests do not build:
+# only those two branches feed the phone. A manual run on another branch
+# tests and builds it, and never publishes: Drive and android-latest only
+# ever get main's or android-app's APK.
+# Every run uploads the APK as a workflow artifact (GitHub always zips
+# those). Every push also replaces the "android-latest" release, whose
+# asset is the bare APK, so the newest build is always one tap away:
+#   https://github.com/7at7ot777/JobCrawlerBot/releases/download/android-latest/JobCrawler.apk
+# Pushing a tag like android-v1.2 publishes a release that stays.
+#
+# Three jobs: `test` and `build` run side by side (they were most of the
+# wait, one after the other), and `publish` starts only once both pass, so
+# an APK whose tests failed is never published.
+on:
+  push:
+    # Naming tags alone would limit pushes to tags; branches have to be named too.
+    branches:
+      - main
+      - android-app
+    paths:
+      - "android/**"
+      - "fixtures/**"
+      - ".env"
+      - ".github/workflows/android.yml"
+    tags:
+      - "android-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: android
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The whole history: the app lists its own updates from it (What's new).
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Unit tests
+        run: ./gradlew testDebugUnitTest --console=plain
+
+  build:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: android
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The whole history: the app lists its own updates from it (What's new).
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      # No secrets: the bot settings come from the repo's .env, and the APK is
+      # signed with the key in android/app, so every build updates the last.
+      - name: Build APK
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: 1.0.${{ github.run_number }}
+        run: |
+          ./gradlew assembleRelease --console=plain
+          cp app/build/outputs/apk/release/app-release.apk "$RUNNER_TEMP/JobCrawler.apk"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: JobCrawler-apk
+          path: ${{ runner.temp }}/JobCrawler.apk
+
+  # Only the APK from `build`, and only after `test` passed too. No checkout:
+  # nothing here reads the repo, and gh is pointed at it by GH_REPO.
+  publish:
+    needs: [test, build]
+    runs-on: ubuntu-24.04
+    env:
+      # Set once with `gh secret set RCLONE_CONF` (see android/README.md);
+      # without it the Drive upload is skipped and nothing else changes.
+      HAS_DRIVE: ${{ secrets.RCLONE_CONF != '' }}
+      DRIVE_FOLDER: YOUR_DRIVE_FOLDER_ID
+
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: JobCrawler-apk
+          path: ${{ runner.temp }}
+
+      # The newest APK in the shared Drive folder, the older ones moved to
+      # Drive's trash. Uploaded before deleting, so the folder is never empty.
+      - name: Upload to Google Drive
+        id: drive
+        if: env.HAS_DRIVE == 'true' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/android-app')
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq rclone > /dev/null
+          mkdir -p ~/.config/rclone
+          printf '%s\n' "$RCLONE_CONF" > ~/.config/rclone/rclone.conf
+          name="JobCrawler-1.0.${{ github.run_number }}.apk"
+          rclone copyto "$RUNNER_TEMP/JobCrawler.apk" "gdrive:$name" --drive-root-folder-id "$DRIVE_FOLDER"
+          rclone delete "gdrive:" --drive-root-folder-id "$DRIVE_FOLDER" --max-depth 1 \
+            --filter "- $name" --filter "+ JobCrawler*.apk" --filter "- *"
+          rclone lsl "gdrive:" --drive-root-folder-id "$DRIVE_FOLDER" --max-depth 1
+
+      # Deleted and made again rather than edited, so it is always the newest.
+      # Its tag sits on the default branch: GitHub refuses a workflow token a
+      # new tag on a commit whose workflow files differ from it (HTTP 403).
+      # The tag is only a name here; the APK is the one just built. Runs even
+      # when only the Drive upload failed: the two are independent.
+      - name: Publish latest build
+        if: (success() || steps.drive.outcome == 'failure') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/android-app')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release delete android-latest --yes --cleanup-tag || true
+          gh release create android-latest "$RUNNER_TEMP/JobCrawler.apk" \
+            --prerelease \
+            --target "${{ github.event.repository.default_branch }}" \
+            --title "Latest Android build (${GITHUB_REF_NAME}, 1.0.${{ github.run_number }})" \
+            --notes "Built from ${GITHUB_SHA::7}. Replaced on every push; open this page on the phone and tap JobCrawler.apk."
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/android-v')
+        uses: softprops/action-gh-release@v3
+        with:
+          files: ${{ runner.temp }}/JobCrawler.apk

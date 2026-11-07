@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One count on the console: new jobs, to review, sent on their own. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="#33FFFFFF">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/heroTile" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+</ripple>

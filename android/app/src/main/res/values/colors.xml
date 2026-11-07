@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The design canvas's tokens ("console" look); values-night has the dark set.
+         Every text colour here passes 4.5:1 on the surface it is used on. -->
+    <color name="primary">#0E6B4E</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="background">#F3F4F1</color>
+    <!-- The app bar and status bar sit on the page colour: no band at the top. -->
+    <color name="bar">#F3F4F1</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="divider">#DDE2DD</color>
+    <color name="track">#E7EBE7</color>
+    <color name="text">#111814</color>
+    <color name="textMuted">#56615B</color>
+    <color name="soft">#DFF0E8</color>
+    <color name="softText">#0B5A41</color>
+    <color name="good">#137A4A</color>
+    <color name="goodSoft">#DFF0E8</color>
+    <color name="warn">#8C5600</color>
+    <color name="warnSoft">#FBEFD9</color>
+    <color name="bad">#B0261E</color>
+    <color name="badSoft">#FBE5E2</color>
+    <!-- Saudi & UAE: emailed on its own, never posted. -->
+    <color name="gulf">#2F389C</color>
+    <color name="gulfSoft">#E6E8FA</color>
+    <!-- The status console: dark in both modes. -->
+    <color name="hero">#111814</color>
+    <color name="heroLine">#2A3530</color>
+    <color name="heroTile">#1B2520</color>
+    <color name="heroText">#F1F5F2</color>
+    <color name="heroMuted">#A9B6AF</color>
+    <color name="heroAccent">#6EE0AE</color>
+    <color name="heroOnAccent">#062218</color>
+    <color name="heroWarn">#F2B657</color>
+    <color name="heroGulf">#B9BFFF</color>
+    <color name="heroBad">#F59A90</color>
+</resources>

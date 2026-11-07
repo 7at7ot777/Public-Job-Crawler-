@@ -1,0 +1,10 @@
+{
+  "args": { "board": "greenhouse:tamara" },
+  "items": [
+    {
+      "company": "Tamara",
+      "postedAt": "2026-10-21T14:00:00Z",
+      "excerpt": "Laravel & Vue"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+services:
+  crawler:
+    build: .
+    image: linkedin-jobs-telegram
+    container_name: linkedin-jobs-telegram
+    restart: unless-stopped
+
+    # Read at run time, not baked into the image, so credentials can be changed
+    # without a rebuild.
+    env_file:
+      - .env
+
+    # Everything has a working default in the image; these are the knobs worth
+    # reaching for. See the Dockerfile for what each one means.
+    environment:
+      PORT: 3000
+      CRAWL_MODE: sequential
+      # Fast lane: LinkedIn jobs every 10 minutes, so postings reach Telegram
+      # while they are still fresh. Workable moved to the periodic lane (hourly).
+      # Egypt only, a pass is ~6 minutes, so 10 still pauses between passes;
+      # crawling with no pause is what drew 429s. See the Dockerfile.
+      # wuzzuf, tanqeeb and naukrigulf block datacenter IPs and find nothing
+      # from a hosted container; add them back when running from home.
+      CRAWL_SOURCES: "linkedin_jobs"
+      CRAWL_INTERVAL_MINUTES: 10
+      # Daily lane: the hiring-posts search at 07:00 in the container TZ
+      # (Africa/Cairo, from .env and the image). It is billed per query — 50
+      # Serper queries a run — so a fixed time of day is what "once a day"
+      # should mean; an interval would drift with every pass.
+      CRAWL_DAILY_SOURCES: "linkedin_posts"
+      CRAWL_DAILY_AT: "07:00"
+      # Recruitera's Egypt tech jobs: on every start, then every 24
+      # hours. Named companies' career boards (ATS_BOARDS) every 12 hours,
+      # twice a day.
+      # Plus the sources ported from the Android app, at the app's rhythm (see the Dockerfile).
+      CRAWL_PERIODIC_SOURCES: "workable:1 vertex:1 recruitera:6 ats:12 ai_data:3 drjob:1 jobright:1 remote_feeds:3 jobgether:3 sponsor_boards:3 relocateme:3 job_apis:12 hn_hiring:24"
+      CRAWL_RUN_AT_START: "recruitera"
+      NODE_HEAP_MB: 128
+      # What and where to look, left to the defaults in src/config.js (Egypt
+      # only, on-site and remote alike; Laravel, Full Stack, Backend, Node.js
+      # and Software Engineer hiring posts). Empty, not absent: env_file above would otherwise hand the
+      # container an older .env's remote-only, Laravel-only, Egypt-only lists.
+      FILTER_REMOTE_ONLY: ""
+      JOB_LOCATIONS: ""
+      # A single space, not empty: empty would mean the code default
+      # (Worldwide, EMEA), a space means no remote-only searches at all.
+      JOB_REMOTE_LOCATIONS: " "
+      FILTER_LOCATIONS: ""
+      LINKEDIN_POSTS_KEYWORDS: ""
+      LINKEDIN_POSTS_LOCATIONS: ""
+
+    # Only CRAWL_MODE=watch listens; sequential runs nothing resident. Harmless
+    # either way, and needed if you switch modes.
+    ports:
+      - "3000:3000"
+
+    volumes:
+      # The dedup database. Without this, every restart re-sends jobs that were
+      # already delivered.
+      - crawler-data:/app/data
+      - crawler-logs:/app/logs
+
+  # The search index the posts source reads. LinkedIn has no logged-out post
+  # search, so hiring posts are found through an engine's index instead —
+  # self-hosted because the public instances rate-limit or block a crawler,
+  # and because JSON output has to be switched on, which this config does.
+  #
+  # Behind a profile, so it stays off unless asked for: it is a second
+  # container of a few hundred megabytes, and the posts source is the only
+  # thing that reads it.
+  #
+  #   docker compose --profile posts up -d
+  searxng:
+    image: searxng/searxng:latest
+    container_name: linkedin-posts-searxng
+    restart: unless-stopped
+    profiles: ["posts"]
+
+    environment:
+      # Must match SEARXNG_URL in .env as seen from the crawler container.
+      SEARXNG_BASE_URL: http://searxng:8080/
+      # Any long random string; it signs the instance's own tokens.
+      SEARXNG_SECRET: ${SEARXNG_SECRET:-change-me}
+
+    volumes:
+      # settings.yml lands here on first boot. Two edits are required:
+      #   search.formats: [html, json]   — the crawler reads JSON
+      #   server.limiter: false          — the limiter blocks its own crawler
+      - searxng-config:/etc/searxng
+
+    # Exposed only so you can check it in a browser; the crawler reaches it
+    # over the compose network as http://searxng:8080.
+    ports:
+      - "8080:8080"
+
+volumes:
+  crawler-data:
+  crawler-logs:
+  searxng-config:

@@ -1,0 +1,12 @@
+{
+  "args": { "keyword": "PHP Developer", "market": "Egypt" },
+  "items": [
+    {
+      "externalId": "4012345678",
+      "title": "PHP Developer",
+      "company": "Acme",
+      "url": "https://eg.linkedin.com/jobs/view/php-developer-at-acme-4012345678",
+      "postedAt": "2026-10-23T00:00:00Z"
+    }
+  ]
+}

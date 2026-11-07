@@ -1,0 +1,11 @@
+{
+  "args": { "keyword": "Backend", "market": "Egypt" },
+  "items": [
+    {
+      "company": "Acme",
+      "location": "Cairo, Cairo Governorate, Egypt",
+      "workplace": "Hybrid",
+      "postedAt": "2026-10-22T08:00:00Z"
+    }
+  ]
+}

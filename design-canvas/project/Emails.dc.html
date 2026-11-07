@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jobs to email</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 900px; box-sizing: border-box; background: {{t.bg}}; color: {{t.text}}; font-family: Roboto, system-ui, sans-serif; display: flex; flex-direction: column; position: relative">
+
+<header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 16px 0 4px; background: {{t.bar}}; border-bottom: 1px solid {{t.border}}">
+<a href="Main.dc.html" aria-label="Back" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: {{t.text}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+</a>
+<h1 style="margin: 0; font-size: 20px; font-weight: 500; color: {{t.text}}">Emails</h1>
+</header>
+
+<main style="flex-grow: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 0 4px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.muted}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: {{t.muted}}">{{intro}}</p>
+</div>
+
+<sc-if value="{{none}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 56px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<span style="width: 56px; height: 56px; border-radius: 28px; background: {{t.goodSoft}}; color: {{t.good}}; display: flex; align-items: center; justify-content: center">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+</span>
+<p style="margin: 0; font-size: 17px; font-weight: 500; color: {{t.text}}">Nothing to review</p>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: {{t.muted}}">Jobs that give a hiring address show up here after each run.</p>
+</div>
+</sc-if>
+
+<sc-for list="{{items}}" as="m" hint-placeholder-count="2">
+<article style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+<a href="Job.dc.html" style="display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: {{t.text}}">
+<span style="align-self: flex-start; font-size: 12px; font-weight: 500; color: {{t.softText}}; background: {{t.soft}}; border-radius: 100px; padding: 3px 10px">{{m.source}}</span>
+<span dir="auto" style="font-size: 16px; font-weight: 500; line-height: 22px">{{m.title}}</span>
+<span dir="auto" style="font-size: 14px">{{m.where}}</span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: {{t.muted}}">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>
+{{m.address}} · read the job first
+</span>
+</a>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px">
+<button onClick="{{m.send}}" disabled="{{m.busy}}" style="height: 44px; border: 0; border-radius: 12px; background: {{m.sendBg}}; color: {{m.sendText}}; font: 500 15px Roboto, sans-serif">{{m.sendLabel}}</button>
+<button onClick="{{m.ignore}}" disabled="{{m.busy}}" style="height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Ignore</button>
+</div>
+</article>
+</sc-for>
+</main>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 24px; background: {{t.toastBg}}; color: {{t.toastText}}; border-radius: 12px; padding: 14px 16px; font-size: 14px; line-height: 20px">{{toast}}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  theme(dark) {
+    if (dark) {
+      return { bg: '#0F1318', bar: '#151A21', surface: '#1A2029', border: '#2A323D', text: '#E6EAF0', muted: '#9AA5B4', primary: '#6FA3F8', onPrimary: '#0B1A33', soft: '#1F2B3E', softText: '#9CC0FB', good: '#5AD394', goodSoft: '#17322A', warn: '#F0B65A', warnSoft: '#33280F', bad: '#F49A92', badSoft: '#3A1E1D', toastBg: '#E6EAF0', toastText: '#1B2430' };
+    }
+    return { bg: '#F2F4F8', bar: '#FFFFFF', surface: '#FFFFFF', border: '#E1E6EE', text: '#1B2430', muted: '#5F6B7A', primary: '#1F6FEB', onPrimary: '#FFFFFF', soft: '#E8F0FE', softText: '#1A5BC4', good: '#137A4A', goodSoft: '#E3F5EC', warn: '#8A5200', warnSoft: '#FDF1DE', bad: '#B93A31', badSoft: '#FBE7E5', toastBg: '#1B2430', toastText: '#FFFFFF' };
+  }
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+    clearTimeout(this.toastTimer);
+  }
+  say(message) {
+    clearTimeout(this.toastTimer);
+    this.setState({ toast: message });
+    this.toastTimer = setTimeout(() => this.setState({ toast: null }), 2600);
+  }
+  renderVals() {
+    const t = this.theme(this.props.dark ?? false);
+    const s = this.state || {};
+    const gone = s.gone || {};
+    const busy = s.busy || null;
+    const all = [
+      { id: 'a', title: 'Backend Developer', where: 'Fixed Solutions · Cairo, Egypt', source: 'Company boards', address: '[hiring email]' },
+      { id: 'b', title: 'Laravel Developer', where: '[COMPANY] · Nasr City, Cairo', source: 'LinkedIn', address: '[hiring email]' }
+    ];
+    const left = all.filter((m) => !gone[m.id]);
+    return {
+      t,
+      none: left.length === 0,
+      intro: left.length === 0
+        ? 'Every job with an address has been sent or ignored.'
+        : left.length + ' jobs give a hiring address. Nothing is emailed until you tap Send.',
+      hasToast: !!s.toast,
+      toast: s.toast || '',
+      items: left.map((m) => {
+        const sending = busy === m.id;
+        return {
+          ...m,
+          busy: !!busy,
+          sendLabel: sending ? 'Sending…' : 'Send CV',
+          sendBg: busy ? t.border : t.primary,
+          sendText: busy ? t.muted : t.onPrimary,
+          send: () => {
+            this.setState({ busy: m.id });
+            this.timer = setTimeout(() => {
+              this.setState({ busy: null, gone: { ...gone, [m.id]: true } });
+              this.say('CV sent to ' + m.address);
+            }, 1200);
+          },
+          ignore: () => {
+            this.setState({ gone: { ...gone, [m.id]: true } });
+            this.say('Ignored. It will not be offered again.');
+          }
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

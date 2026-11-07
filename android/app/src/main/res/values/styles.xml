@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Dark mode follows the system: values-night swaps the theme and the colours. -->
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+        <item name="android:colorPrimary">@color/bar</item>
+        <item name="android:colorPrimaryDark">@color/bar</item>
+        <item name="android:colorAccent">@color/primary</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/bar</item>
+        <!-- Android 15 draws edge to edge, the screen under the status bar and the app bar; keep it below them. -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:actionBarStyle">@style/AppBar</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/textMuted</item>
+        <item name="android:fontFamily">@font/manrope</item>
+    </style>
+
+    <!-- A flat bar the colour of the cards, its title in the text colour. -->
+    <style name="AppBar" parent="android:Widget.Material.Light.ActionBar.Solid">
+        <item name="android:background">@color/bar</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:titleTextStyle">@style/AppBarTitle</item>
+    </style>
+
+    <style name="AppBarTitle" parent="android:TextAppearance.Material.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/manrope_extrabold</item>
+    </style>
+
+    <!-- A section of a screen. -->
+    <style name="Card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@drawable/card</item>
+    </style>
+
+    <style name="CardTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Caption">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/textMuted</item>
+        <item name="android:lineSpacingMultiplier">1.15</item>
+    </style>
+
+    <!-- "WHAT TO SEARCH" over a settings card. -->
+    <style name="SectionLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/manrope_extrabold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/textMuted</item>
+    </style>
+
+    <!-- The small label above a field. -->
+    <style name="Label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="android:textColor">@color/textMuted</item>
+    </style>
+
+    <!-- An outlined text field. Parented on the platform EditText so a field built in code
+         (EditText(ctx, null, 0, R.style.Field) skips the theme's editTextStyle) is still
+         focusable, editable and has a cursor. -->
+    <style name="Field" parent="android:Widget.Material.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:background">@drawable/field</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textColorHint">@color/textMuted</item>
+        <item name="android:importantForAutofill">no</item>
+    </style>
+
+    <!-- A settings row with a switch at its end: the title, and under it a caption. -->
+    <style name="SwitchRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">60dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:thumbTint">@color/switch_thumb</item>
+        <item name="android:trackTint">@color/switch_track</item>
+        <item name="android:switchPadding">12dp</item>
+        <!-- No ON/OFF thumb text: some OEM themes (e.g. OneUI) default showText to
+             true with null textOn/textOff, which crashes Switch.makeLayout at measure. -->
+        <item name="android:showText">false</item>
+        <item name="android:textOn"></item>
+        <item name="android:textOff"></item>
+    </style>
+
+    <!-- The main thing a card does. Parented on the platform Button, and centred explicitly, so a
+         button built in code (Button(ctx, null, 0, R.style.ButtonPrimary)) centres its text too. -->
+    <style name="ButtonPrimary" parent="android:Widget.Material.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:background">@drawable/button_primary</item>
+        <item name="android:textColor">@color/button_primary_text</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+    <!-- Everything else. -->
+    <style name="ButtonSoft" parent="ButtonPrimary">
+        <item name="android:background">@drawable/button_soft</item>
+        <item name="android:textColor">@color/button_soft_text</item>
+    </style>
+
+    <!-- A quiet choice beside a main one: an outline, the text colour. -->
+    <style name="ButtonOutline" parent="ButtonPrimary">
+        <item name="android:background">@drawable/button_outline</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <!-- A filter that narrows a list, on or off. -->
+    <style name="FilterChip" parent="ButtonSoft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:background">@drawable/filter_chip</item>
+        <item name="android:textColor">@color/filter_chip_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+    </style>
+</resources>

@@ -1,0 +1,30 @@
+{
+  "name": "linkedin-jobs-telegram",
+  "version": "1.0.0",
+  "description": "Crawls LinkedIn's public guest job search for configured keywords and pushes new postings to a Telegram channel.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "bin": {
+    "linkedin-jobs-telegram": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js --watch",
+    "once": "node src/index.js --once",
+    "dry-run": "node src/index.js --once --dry-run",
+    "jobs": "node src/index.js --watch --exclude linkedin_posts",
+    "posts": "node src/index.js --once --source linkedin_posts",
+    "posts:watch": "node src/index.js --watch --source linkedin_posts",
+    "test": "node --test",
+    "posts:dry-run": "node src/index.js --once --dry-run --source linkedin_posts",
+    "x": "node src/index.js --once --source x_posts --source x_session",
+    "x:dry-run": "node src/index.js --once --dry-run --source x_posts --source x_session"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "node-cron": "^4.6.0",
+    "x-client-transaction-id": "^0.3.1"
+  }
+}

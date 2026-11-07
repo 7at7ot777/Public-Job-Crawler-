@@ -1,0 +1,19 @@
+{
+  "args": { "keyword": "php" },
+  "items": [
+    {
+      "externalId": "021158212",
+      "url": "https://egypt.tanqeeb.com/jobs-in-egypt/all/jobs/021158212.html",
+      "location": "Egypt, Cairo",
+      "workplace": "On-site",
+      "board": "Bayt",
+      "postedAt": "2026-08-13T00:00:00Z"
+    },
+    { "externalId": "021158213" }
+  ],
+  "skip": {
+    "node": {
+      "postedAt": "The ports disagree: Node reads a bare date as Cairo midnight (2026-08-12T21:00Z), Kotlin as UTC midnight (2026-08-13T00:00Z). Undecided which is right."
+    }
+  }
+}

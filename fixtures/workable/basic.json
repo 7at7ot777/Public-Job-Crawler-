@@ -1,0 +1,7 @@
+{"totalSize": 2, "nextPageToken": "abc", "jobs": [
+  {"id": "J1", "state": "published", "title": "Backend Engineer", "url": "https://jobs.workable.com/view/J1",
+   "company": {"title": "Acme"}, "locations": ["Cairo, Cairo Governorate, Egypt", "TELECOMMUTE"],
+   "location": {"countryName": "Egypt"}, "workplace": "hybrid", "created": "2026-10-22T08:00:00.000Z",
+   "description": "<p>Node.js &amp; Laravel</p>"},
+  {"id": "J2", "state": "closed", "title": "Old", "url": "https://jobs.workable.com/view/J2"}
+]}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jobs found</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 1060px; box-sizing: border-box; background: {{t.bg}}; color: {{t.text}}; font-family: Roboto, system-ui, sans-serif; display: flex; flex-direction: column">
+
+<header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 16px 0 4px; background: {{t.bar}}">
+<a href="Main.dc.html" aria-label="Back" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: {{t.text}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+</a>
+<h1 style="margin: 0; font-size: 20px; font-weight: 500; color: {{t.text}}">Jobs</h1>
+</header>
+
+<div style="flex-shrink: 0; background: {{t.bar}}; border-bottom: 1px solid {{t.border}}; padding: 4px 16px 12px; display: flex; gap: 8px; align-items: center">
+<label style="position: relative; display: flex; align-items: center">
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Source</span>
+<select onChange="{{pickSource}}" style="height: 36px; border: 1px solid {{t.border}}; border-radius: 100px; background: {{t.surface}}; color: {{t.text}}; font: 500 14px Roboto, sans-serif; padding: 0 12px">
+<option value="all">All sources</option>
+<option value="LinkedIn">LinkedIn</option>
+<option value="Wuzzuf">Wuzzuf</option>
+<option value="Tanqeeb">Tanqeeb</option>
+<option value="Workable">Workable</option>
+<option value="Recruitera">Recruitera</option>
+<option value="Company boards">Company boards</option>
+</select>
+</label>
+<button aria-pressed="{{newPressed}}" onClick="{{toggleNew}}" style="height: 36px; border: 1px solid {{newBorder}}; border-radius: 100px; background: {{newBg}}; color: {{newText}}; font: 500 14px Roboto, sans-serif; padding: 0 14px">New</button>
+<button aria-pressed="{{emailPressed}}" onClick="{{toggleEmail}}" style="height: 36px; border: 1px solid {{emailBorder}}; border-radius: 100px; background: {{emailBg}}; color: {{emailText}}; font: 500 14px Roboto, sans-serif; padding: 0 14px">Has email</button>
+</div>
+
+<p style="margin: 0; padding: 12px 20px 4px; font-size: 13px; color: {{t.muted}}">{{summary}}</p>
+
+<main style="flex-grow: 1; padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{none}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 48px 24px; text-align: center; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 16px; font-weight: 500; color: {{t.text}}">Nothing matches these filters</p>
+<p style="margin: 0; font-size: 14px; color: {{t.muted}}">Turn a filter off to see more jobs.</p>
+</div>
+</sc-if>
+<sc-for list="{{jobs}}" as="j" hint-placeholder-count="6">
+<a href="Job.dc.html" style="display: flex; flex-direction: column; gap: 6px; background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 14px 16px; text-decoration: none; color: {{t.text}}">
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="font-size: 12px; font-weight: 500; color: {{t.softText}}; background: {{t.soft}}; border-radius: 100px; padding: 3px 10px">{{j.source}}</span>
+<sc-if value="{{j.isNew}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 12px; font-weight: 700; color: {{t.good}}; background: {{t.goodSoft}}; border-radius: 100px; padding: 3px 10px">New</span>
+</sc-if>
+<sc-if value="{{j.cvSent}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 12px; font-weight: 500; color: {{t.good}}; background: {{t.goodSoft}}; border-radius: 100px; padding: 3px 10px">CV sent</span>
+</sc-if>
+<sc-if value="{{j.emailOnly}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 12px; font-weight: 500; color: {{t.softText}}; background: {{t.soft}}; border-radius: 100px; padding: 3px 10px">Has email</span>
+</sc-if>
+</div>
+<span dir="auto" style="font-size: 16px; font-weight: 500; line-height: 22px">{{j.title}}</span>
+<span dir="auto" style="font-size: 14px; color: {{t.text}}">{{j.where}}</span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: {{j.statusColor}}">
+<span style="width: 6px; height: 6px; border-radius: 3px; background: {{j.statusColor}}"></span>
+{{j.status}}
+</span>
+</a>
+</sc-for>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  theme(dark) {
+    if (dark) {
+      return { bg: '#0F1318', bar: '#151A21', surface: '#1A2029', border: '#2A323D', text: '#E6EAF0', muted: '#9AA5B4', primary: '#6FA3F8', onPrimary: '#0B1A33', soft: '#1F2B3E', softText: '#9CC0FB', good: '#5AD394', goodSoft: '#17322A', warn: '#F0B65A', warnSoft: '#33280F', bad: '#F49A92', badSoft: '#3A1E1D' };
+    }
+    return { bg: '#F2F4F8', bar: '#FFFFFF', surface: '#FFFFFF', border: '#E1E6EE', text: '#1B2430', muted: '#5F6B7A', primary: '#1F6FEB', onPrimary: '#FFFFFF', soft: '#E8F0FE', softText: '#1A5BC4', good: '#137A4A', goodSoft: '#E3F5EC', warn: '#8A5200', warnSoft: '#FDF1DE', bad: '#B93A31', badSoft: '#FBE7E5' };
+  }
+  renderVals() {
+    const t = this.theme(this.props.dark ?? false);
+    const s = this.state || {};
+    const src = s.src || 'all';
+    const onlyNew = !!s.onlyNew;
+    const onlyEmail = !!s.onlyEmail;
+    const sent = { status: 'In Telegram · ', color: t.muted };
+    const all = [
+      { title: 'Backend Developer', where: 'Blox · Cairo, Egypt', source: 'Wuzzuf', ago: '12 min ago', tg: 'pending', isNew: true, email: false, cvSent: false },
+      { title: 'Middle Full Stack PHP (AI Expertise)', where: 'Vertex Technologies · Cairo, Egypt', source: 'Wuzzuf', ago: '34 min ago', tg: 'sent', isNew: true, email: false, cvSent: false },
+      { title: 'Backend Developer', where: 'Fixed Solutions · Cairo, Egypt', source: 'Company boards', ago: '3 h ago', tg: 'sent', isNew: true, email: true, cvSent: false },
+      { title: 'Application Support Engineer', where: 'Fixed Solutions · Cairo, Egypt', source: 'Company boards', ago: '3 h ago', tg: 'sent', isNew: false, email: true, cvSent: true },
+      { title: 'PHP Backend Developer', where: 'IX Solutions · مصر - القاهرة', source: 'Tanqeeb', ago: '5 h ago', tg: 'sent', isNew: false, email: false, cvSent: false },
+      { title: 'Full-Stack Software Engineer - Remote | U.S. Hours', where: 'Pavago · Egypt', source: 'Workable', ago: '6 h ago', tg: 'failed', isNew: false, email: false, cvSent: false }
+    ];
+    const shown = all.filter((j) => (src === 'all' || j.source === src) && (!onlyNew || j.isNew) && (!onlyEmail || j.email));
+    const label = { sent: 'In Telegram', pending: 'Waiting for Telegram', failed: 'Telegram failed · retries next run' };
+    const color = { sent: t.muted, pending: t.warn, failed: t.bad };
+    const pill = (on) => ({ bg: on ? t.primary : t.surface, text: on ? t.onPrimary : t.text, border: on ? t.primary : t.border, pressed: on ? 'true' : 'false' });
+    const n = pill(onlyNew);
+    const e = pill(onlyEmail);
+    return {
+      t,
+      jobs: shown.map((j) => ({ ...j, emailOnly: j.email && !j.cvSent, status: j.ago + ' · ' + label[j.tg], statusColor: color[j.tg] })),
+      none: shown.length === 0,
+      summary: shown.length + ' of 120 jobs · 3 new since your last look',
+      pickSource: (ev) => this.setState({ src: ev.target.value }),
+      toggleNew: () => this.setState({ onlyNew: !onlyNew }),
+      toggleEmail: () => this.setState({ onlyEmail: !onlyEmail }),
+      newBg: n.bg, newText: n.text, newBorder: n.border, newPressed: n.pressed,
+      emailBg: e.bg, emailText: e.text, emailBorder: e.border, emailPressed: e.pressed
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Style spec for Android views</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1330px; height: 1240px; box-sizing: border-box; background: #FFFFFF; color: #1B2430; font-family: Roboto, system-ui, sans-serif; padding: 48px; display: flex; flex-direction: column; gap: 28px">
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-size: 32px; font-weight: 500">Style spec</h1>
+<p style="margin: 0; font-size: 15px; color: #5F6B7A">Plain Android views only: shapes, ripples and framework widgets. Values in dp and sp.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px">
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">Colours · values/colors.xml and values-night</h2>
+<div style="display: grid; grid-template-columns: 150px 1fr 1fr; gap: 0; font-size: 13px">
+<span style="padding: 8px 0; font-weight: 700; color: #5F6B7A; border-bottom: 1px solid #E1E6EE">Token</span>
+<span style="padding: 8px 0; font-weight: 700; color: #5F6B7A; border-bottom: 1px solid #E1E6EE">Light</span>
+<span style="padding: 8px 0; font-weight: 700; color: #5F6B7A; border-bottom: 1px solid #E1E6EE">Dark</span>
+<sc-for list="{{colors}}" as="c" hint-placeholder-count="14">
+<span style="padding: 7px 0; font-family: 'Roboto Mono', monospace; border-bottom: 1px solid #E1E6EE">{{c.name}}</span>
+<span style="padding: 7px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #E1E6EE"><span style="width: 18px; height: 18px; border-radius: 5px; border: 1px solid #E1E6EE; background: {{c.light}}"></span><span style="font-family: 'Roboto Mono', monospace">{{c.light}}</span></span>
+<span style="padding: 7px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #E1E6EE"><span style="width: 18px; height: 18px; border-radius: 5px; border: 1px solid #2A323D; background: {{c.dark}}"></span><span style="font-family: 'Roboto Mono', monospace">{{c.dark}}</span></span>
+</sc-for>
+</div>
+<p style="margin: 4px 0 0; font-size: 13px; line-height: 19px; color: #5F6B7A">Text pairs pass 4.5:1. Soft buttons use softText, not primary: #1F6FEB on #E8F0FE is only 4.1:1. In dark mode, primary is light, so text on it is dark (onPrimary).</p>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 28px">
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">Type · Roboto (system), Roboto Mono for the log</h2>
+<sc-for list="{{type}}" as="ty" hint-placeholder-count="9">
+<div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid #E1E6EE; padding: 6px 0">
+<span style="width: 190px; flex-shrink: 0; font-size: 13px; color: #5F6B7A">{{ty.use}}</span>
+<span style="flex-grow: 1; font-size: {{ty.px}}; font-weight: {{ty.weight}}; letter-spacing: {{ty.track}}; font-family: {{ty.family}}">{{ty.sample}}</span>
+<span style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #5F6B7A">{{ty.spec}}</span>
+</div>
+</sc-for>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">Spacing and shape</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 24px; font-size: 14px">
+<span>Screen padding <strong style="font-weight: 500">16dp</strong></span>
+<span>Card radius <strong style="font-weight: 500">16dp</strong>, 1dp border</span>
+<span>Card padding <strong style="font-weight: 500">16dp</strong></span>
+<span>Button radius <strong style="font-weight: 500">12dp</strong>, height 44–48dp</span>
+<span>Gap between cards <strong style="font-weight: 500">12dp</strong></span>
+<span>Chip radius <strong style="font-weight: 500">pill</strong>, 3×10dp padding</span>
+<span>List rows <strong style="font-weight: 500">56–64dp</strong> high</span>
+<span>Text fields <strong style="font-weight: 500">48dp</strong>, 12dp radius, outlined</span>
+<span>Touch targets <strong style="font-weight: 500">≥ 48dp</strong></span>
+<span>Section label: 24dp above, 8dp below</span>
+</div>
+</section>
+
+</div>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">Components</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center">
+<button style="height: 48px; border: 0; border-radius: 12px; background: #1F6FEB; color: #FFFFFF; font: 500 15px Roboto, sans-serif; padding: 0 24px">Primary · button_primary</button>
+<button style="height: 48px; border: 0; border-radius: 12px; background: #E8F0FE; color: #1A5BC4; font: 500 15px Roboto, sans-serif; padding: 0 24px">Soft · button_soft</button>
+<button disabled="disabled" style="height: 48px; border: 0; border-radius: 12px; background: #E1E6EE; color: #5F6B7A; font: 500 15px Roboto, sans-serif; padding: 0 24px">Disabled</button>
+<span style="font-size: 12px; font-weight: 500; color: #1A5BC4; background: #E8F0FE; border-radius: 100px; padding: 3px 10px">Source chip</span>
+<span style="font-size: 12px; font-weight: 700; color: #137A4A; background: #E3F5EC; border-radius: 100px; padding: 3px 10px">New</span>
+<span style="font-size: 12px; font-weight: 500; color: #8A5200; background: #FDF1DE; border-radius: 100px; padding: 3px 10px">Warning</span>
+<span style="font-size: 12px; font-weight: 500; color: #B93A31; background: #FBE7E5; border-radius: 100px; padding: 3px 10px">Failed</span>
+<button role="switch" aria-checked="true" aria-label="Switch on" style="width: 52px; height: 32px; border: 0; border-radius: 16px; background: #1F6FEB; padding: 4px; display: flex; justify-content: flex-end"><span style="width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF"></span></button>
+<button role="switch" aria-checked="false" aria-label="Switch off" style="width: 52px; height: 32px; border: 0; border-radius: 16px; background: #E1E6EE; padding: 4px; display: flex; justify-content: flex-start"><span style="width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF"></span></button>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 500">Building it with framework views</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 40px; font-size: 14px; line-height: 20px">
+<p style="margin: 0"><strong style="font-weight: 500">Theme.</strong> Theme.Material.Light, colorPrimary = surface (a white bar), windowLightStatusBar = true; values-night: Theme.Material.</p>
+<p style="margin: 0"><strong style="font-weight: 500">Settings.</strong> A gear in the action bar (onCreateOptionsMenu) opens SettingsActivity; Home keeps only status and the three rows.</p>
+<p style="margin: 0"><strong style="font-weight: 500">Cards.</strong> LinearLayout with @drawable/card (shape, 16dp corners, 1dp stroke). Rows inside use ?android:selectableItemBackground.</p>
+<p style="margin: 0"><strong style="font-weight: 500">Switches.</strong> android.widget.Switch with thumbTint and trackTint colour state lists from primary and divider.</p>
+<p style="margin: 0"><strong style="font-weight: 500">Fields.</strong> EditText and Spinner backgrounds: an outlined shape with 12dp corners and a 1dp divider stroke (primary when focused).</p>
+<p style="margin: 0"><strong style="font-weight: 500">Messages.</strong> A Toast now; a bottom bar like the one on Emails is a TextView in a FrameLayout, hidden after 2.5 s.</p>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1330,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      colors: [
+        { name: 'primary', light: '#1F6FEB', dark: '#6FA3F8' },
+        { name: 'onPrimary', light: '#FFFFFF', dark: '#0B1A33' },
+        { name: 'background', light: '#F2F4F8', dark: '#0F1318' },
+        { name: 'bar', light: '#FFFFFF', dark: '#151A21' },
+        { name: 'surface', light: '#FFFFFF', dark: '#1A2029' },
+        { name: 'divider', light: '#E1E6EE', dark: '#2A323D' },
+        { name: 'text', light: '#1B2430', dark: '#E6EAF0' },
+        { name: 'textMuted', light: '#5F6B7A', dark: '#9AA5B4' },
+        { name: 'soft', light: '#E8F0FE', dark: '#1F2B3E' },
+        { name: 'softText', light: '#1A5BC4', dark: '#9CC0FB' },
+        { name: 'good / goodSoft', light: '#137A4A', dark: '#5AD394' },
+        { name: 'warn / warnSoft', light: '#8A5200', dark: '#F0B65A' },
+        { name: 'bad / badSoft', light: '#B93A31', dark: '#F49A92' },
+        { name: 'chip fills', light: '#E3F5EC', dark: '#17322A' }
+      ],
+      type: [
+        { use: 'Status headline', sample: 'Last run 7 min ago', px: '26px', weight: '500', track: '0', family: 'Roboto, sans-serif', spec: '26sp · medium' },
+        { use: 'Job title on its page', sample: 'Backend Developer', px: '22px', weight: '500', track: '0', family: 'Roboto, sans-serif', spec: '22sp · medium' },
+        { use: 'App bar title', sample: 'Jobs', px: '20px', weight: '500', track: '0', family: 'Roboto, sans-serif', spec: '20sp · medium' },
+        { use: 'Card title, row title', sample: 'Last run, by source', px: '16px', weight: '500', track: '0', family: 'Roboto, sans-serif', spec: '16sp · medium' },
+        { use: 'Body', sample: 'Fixed Solutions · Cairo, Egypt', px: '15px', weight: '400', track: '0', family: 'Roboto, sans-serif', spec: '15sp · regular' },
+        { use: 'Secondary', sample: 'Every 3 h · next at 07:55', px: '13px', weight: '400', track: '0', family: 'Roboto, sans-serif', spec: '13sp · regular' },
+        { use: 'Section label', sample: 'WHAT TO SEARCH', px: '12px', weight: '700', track: '0.06em', family: 'Roboto, sans-serif', spec: '12sp · bold · caps' },
+        { use: 'Chip', sample: 'Company boards', px: '12px', weight: '500', track: '0', family: 'Roboto, sans-serif', spec: '12sp · medium' },
+        { use: 'Log line', sample: '05:36:08 W no job cards', px: '11.5px', weight: '400', track: '0', family: '\'Roboto Mono\', monospace', spec: '11.5sp · mono' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Add a LinkedIn post</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+textarea:focus{outline:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 1180px; box-sizing: border-box; background: {{t.bg}}; color: {{t.text}}; font-family: Roboto, system-ui, sans-serif; display: flex; flex-direction: column; position: relative">
+
+<header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 16px 0 4px; background: {{t.bar}}; border-bottom: 1px solid {{t.border}}">
+<a href="Main.dc.html" aria-label="Back" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: {{t.text}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+</a>
+<h1 style="margin: 0; font-size: 20px; font-weight: 500; color: {{t.text}}">Add a post</h1>
+</header>
+
+<main style="flex-grow: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+
+<sc-if value="{{showInput}}" hint-placeholder-val="{{ true }}">
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<label for="post-input" style="font-size: 16px; font-weight: 500; color: {{t.text}}">LinkedIn post</label>
+<p style="margin: 0; font-size: 13px; line-height: 19px; color: {{t.muted}}">Its link, its text, or both. The app reads the post, finds the hiring email and drafts your note.</p>
+<textarea id="post-input" value="{{input}}" onInput="{{typed}}" rows="4" style="box-sizing: border-box; width: 100%; min-height: 104px; resize: none; border: 1px solid {{t.border}}; border-radius: 12px; padding: 12px 14px; background: {{t.bg}}; color: {{t.text}}; font: 400 14px/20px Roboto, sans-serif"></textarea>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button onClick="{{read}}" disabled="{{reading}}" style="height: 44px; border: 0; border-radius: 12px; background: {{readBg}}; color: {{readText}}; font: 500 15px Roboto, sans-serif">{{readLabel}}</button>
+<button onClick="{{paste}}" disabled="{{reading}}" style="height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path></svg>
+Paste</button>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isPaste}}" hint-placeholder-val="{{ true }}">
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; gap: 12px; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4"></path><path d="m15.4 6.5-6.8 4"></path></svg>
+</span>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<p style="margin: 0; font-size: 15px; font-weight: 500; color: {{t.text}}">Faster from the LinkedIn app</p>
+<p style="margin: 0; font-size: 13px; line-height: 19px; color: {{t.muted}}">On the post, tap Send or Share, then Job Crawler. This screen opens with the post already in it.</p>
+</div>
+</section>
+<section style="display: flex; gap: 12px; align-items: flex-start; padding: 0 4px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.muted}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+<p style="margin: 0; font-size: 13px; line-height: 19px; color: {{t.muted}}">LinkedIn sometimes hides a post behind its sign-in page. If that happens, the app asks for the text: on the post, tap ⋯ then Copy text.</p>
+</section>
+</sc-if>
+
+<sc-if value="{{isWalled}}" hint-placeholder-val="{{ false }}">
+<section style="background: {{t.warnSoft}}; border-radius: 16px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.warn}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: {{t.text}}"><strong style="font-weight: 500">LinkedIn showed its sign-in page, not the post.</strong> Copy the post's text in the LinkedIn app (⋯ → Copy text), paste it under the link above, and tap Read again.</p>
+<p style="margin: 0; font-size: 13px; color: {{t.warn}}">Found so far: Mona Adel · posted 2 days ago</p>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isResult}}" hint-placeholder-val="{{ false }}">
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<span style="font-size: 12px; font-weight: 500; color: {{t.softText}}; background: {{t.soft}}; border-radius: 100px; padding: 3px 10px">LinkedIn post</span>
+<span style="font-size: 12px; font-weight: 500; color: {{t.muted}}; background: {{t.bg}}; border-radius: 100px; padding: 3px 10px">Added by you</span>
+</div>
+<h2 dir="auto" style="margin: 4px 0 0; font-size: 18px; font-weight: 500; line-height: 24px; color: {{t.text}}">We're hiring a Laravel developer in Nasr City</h2>
+<p style="margin: 0; font-size: 14px; color: {{t.text}}">Mona Adel · posted 2 days ago</p>
+<p dir="auto" style="margin: 4px 0 0; font-size: 14px; line-height: 21px; color: {{t.muted}}; white-space: pre-line">2+ years with PHP and Laravel, REST APIs, MySQL. On-site, full-time.
+Send your CV to [hiring email] with "Laravel" in the subject.</p>
+</section>
+</sc-if>
+
+<sc-if value="{{hasEmail}}" hint-placeholder-val="{{ false }}">
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 40px; height: 40px; border-radius: 20px; background: {{mailSoft}}; color: {{mailColor}}; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>
+</span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px; font-weight: 500; color: {{t.text}}">{{mailTitle}}</span>
+<span style="font-size: 13px; color: {{t.muted}}">{{mailNote}}</span>
+</div>
+</div>
+<sc-if value="{{canSend}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<label for="mail-to" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">TO</label>
+<input id="mail-to" type="email" value="{{to}}" onInput="{{typedTo}}" style="box-sizing: border-box; width: 100%; height: 48px; border: 1px solid {{t.border}}; border-radius: 12px; padding: 0 14px; background: {{t.surface}}; color: {{t.text}}; font: 400 15px Roboto, sans-serif">
+<span style="font-size: 12px; color: {{t.muted}}">Also in the post: [second address]</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<label for="mail-subject" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">SUBJECT</label>
+<input id="mail-subject" type="text" value="{{subject}}" onInput="{{typedSubject}}" style="box-sizing: border-box; width: 100%; height: 48px; border: 1px solid {{t.border}}; border-radius: 12px; padding: 0 14px; background: {{t.surface}}; color: {{t.text}}; font: 400 15px Roboto, sans-serif">
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<label for="mail-body" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">MESSAGE</label>
+<textarea id="mail-body" value="{{message}}" onInput="{{typedMessage}}" rows="11" style="box-sizing: border-box; width: 100%; resize: none; border: 1px solid {{t.border}}; border-radius: 12px; padding: 12px 14px; background: {{t.surface}}; color: {{t.text}}; font: 400 14px/21px Roboto, sans-serif"></textarea>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: {{t.muted}}">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+Attached: CV.pdf</span>
+<button onClick="{{reset}}" style="height: 40px; border: 0; background: transparent; color: {{t.softText}}; font: 500 14px Roboto, sans-serif; padding: 0 4px">Reset the note</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button onClick="{{send}}" disabled="{{busy}}" style="height: 44px; border: 0; border-radius: 12px; background: {{sendBg}}; color: {{sendText}}; font: 500 15px Roboto, sans-serif">{{sendLabel}}</button>
+<button onClick="{{save}}" disabled="{{busy}}" style="height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Save only</button>
+</div>
+<p style="margin: 0; font-size: 12px; line-height: 17px; color: {{t.muted}}">Saved to Jobs either way. Nothing is emailed until you tap Send CV.</p>
+</sc-if>
+<sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}">
+<a href="Main.dc.html" style="height: 44px; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif; display: flex; align-items: center; justify-content: center; text-decoration: none">Done</a>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{isNoEmail}}" hint-placeholder-val="{{ false }}">
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 40px; height: 40px; border-radius: 20px; background: {{t.bg}}; color: {{t.muted}}; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path><path d="M3 3l18 18"></path></svg>
+</span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px; font-weight: 500; color: {{t.text}}">No email in this post</span>
+<span style="font-size: 13px; color: {{t.muted}}">Saved to Jobs. Reply on LinkedIn instead.</span>
+</div>
+</div>
+<button style="height: 44px; border: 0; border-radius: 12px; background: {{t.primary}}; color: {{t.onPrimary}}; font: 500 15px Roboto, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+Copy cover note and open post</button>
+</section>
+</sc-if>
+
+</main>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 24px; background: {{t.toastBg}}; color: {{t.toastText}}; border-radius: 12px; padding: 14px 16px; font-size: 14px; line-height: 20px">{{toast}}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"start":{"editor":"enum","options":["paste","walled","found","noemail"],"default":"paste"},"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  theme(dark) {
+    if (dark) {
+      return { bg: '#0F1318', bar: '#151A21', surface: '#1A2029', border: '#2A323D', text: '#E6EAF0', muted: '#9AA5B4', primary: '#6FA3F8', onPrimary: '#0B1A33', soft: '#1F2B3E', softText: '#9CC0FB', good: '#5AD394', goodSoft: '#17322A', warn: '#F0B65A', warnSoft: '#33280F', bad: '#F49A92', badSoft: '#3A1E1D', toastBg: '#E6EAF0', toastText: '#1B2430' };
+    }
+    return { bg: '#F2F4F8', bar: '#FFFFFF', surface: '#FFFFFF', border: '#E1E6EE', text: '#1B2430', muted: '#5F6B7A', primary: '#1F6FEB', onPrimary: '#FFFFFF', soft: '#E8F0FE', softText: '#1A5BC4', good: '#137A4A', goodSoft: '#E3F5EC', warn: '#8A5200', warnSoft: '#FDF1DE', bad: '#B93A31', badSoft: '#FBE7E5', toastBg: '#1B2430', toastText: '#FFFFFF' };
+  }
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+    clearTimeout(this.toastTimer);
+  }
+  say(message) {
+    clearTimeout(this.toastTimer);
+    this.setState({ toast: message });
+    this.toastTimer = setTimeout(() => this.setState({ toast: null }), 2600);
+  }
+  renderVals() {
+    const t = this.theme(this.props.dark ?? false);
+    const s = this.state || {};
+    const start = this.props.start ?? 'paste';
+    const step = s.step || start;
+    const link = 'https://www.linkedin.com/posts/mona-adel_hiring-laravel-activity-7389…';
+    const input = s.input ?? (step === 'paste' ? link : link + (step === 'walled' ? '\n' : ''));
+    const reading = step === 'reading';
+    const busy = !!s.busy;
+    const sent = step === 'sent';
+    const saved = step === 'saved';
+    const found = step === 'found' || sent || saved;
+    const note = 'Hello hiring team,\n\nI\'d like to apply for the role in your LinkedIn post. I\'m a backend developer working mainly with PHP/Laravel and Node.js, building REST APIs and the databases behind them.\n\nMy CV is attached, and I\'d be glad to talk at a time that suits you.\n\nBest regards,\n[YOUR NAME]';
+    return {
+      t,
+      input,
+      to: s.to ?? '[hiring email]',
+      subject: s.subject ?? 'Application for the role in your LinkedIn post',
+      message: s.message ?? note,
+      typedTo: (e) => this.setState({ to: e.target.value }),
+      typedSubject: (e) => this.setState({ subject: e.target.value }),
+      typedMessage: (e) => this.setState({ message: e.target.value }),
+      reset: () => this.setState({ subject: null, message: null }),
+      reading,
+      busy,
+      showInput: step === 'paste' || step === 'reading' || step === 'walled',
+      isPaste: step === 'paste' || step === 'reading',
+      isWalled: step === 'walled',
+      isResult: found || step === 'noemail',
+      hasEmail: found,
+      isNoEmail: step === 'noemail',
+      canSend: step === 'found',
+      isDone: sent || saved,
+      readLabel: reading ? 'Reading…' : 'Read post',
+      readBg: reading ? t.border : t.primary,
+      readText: reading ? t.muted : t.onPrimary,
+      mailTitle: sent ? 'CV sent' : 'Email found',
+      mailNote: sent ? 'To ' + (s.to ?? '[hiring email]') + ' · just now' : 'Check it, add anything, then send',
+      mailColor: sent ? t.good : t.softText,
+      mailSoft: sent ? t.goodSoft : t.soft,
+      sendLabel: busy ? 'Sending…' : 'Send CV',
+      sendBg: busy ? t.border : t.primary,
+      sendText: busy ? t.muted : t.onPrimary,
+      hasToast: !!s.toast,
+      toast: s.toast || '',
+      typed: (e) => this.setState({ input: e.target.value }),
+      paste: () => this.setState({ input: link }),
+      read: () => {
+        this.setState({ step: 'reading' });
+        this.timer = setTimeout(() => this.setState({ step: 'found' }), 1200);
+      },
+      send: () => {
+        this.setState({ busy: true });
+        this.timer = setTimeout(() => {
+          this.setState({ busy: false, step: 'sent' });
+          this.say('CV sent to [hiring email]');
+        }, 1200);
+      },
+      save: () => {
+        this.setState({ step: 'saved' });
+        this.say('Saved to Jobs. It also waits in Emails.');
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

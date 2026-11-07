@@ -1,0 +1,25 @@
+node_modules/
+data/
+logs/
+*.log
+*.sqlite
+*.sqlite-journal
+.git/
+.gitignore
+.env.example
+README.md
+Dockerfile
+.dockerignore
+docker-compose.yml
+run-once.cmd
+
+# .env is deliberately NOT ignored.
+#
+# Some platforms auto-detect a Node project and generate their own image whose
+# only source of configuration is `COPY . .`. Excluding .env there leaves the
+# container with no settings at all, so it starts, binds its port, and then
+# reports "Crawler is disabled" on every tick without ever crawling.
+#
+# The trade-off: credentials are baked into the image layers. Prefer setting
+# environment variables in the platform's own panel where that is an option —
+# those override anything in .env.

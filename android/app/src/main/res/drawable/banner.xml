@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A notice above the status card; its colour is set where it is used. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/warnSoft" />
+    <corners android:radius="18dp" />
+</shape>

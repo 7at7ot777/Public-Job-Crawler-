@@ -1,0 +1,7 @@
+node_modules/
+# .env is committed intentionally (see README)
+data/
+logs/
+*.log
+*.sqlite
+*.sqlite-journal

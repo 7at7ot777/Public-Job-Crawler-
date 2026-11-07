@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="android:Theme.Material">
+        <item name="android:colorPrimary">@color/bar</item>
+        <item name="android:colorPrimaryDark">@color/bar</item>
+        <item name="android:colorAccent">@color/primary</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/bar</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:actionBarStyle">@style/AppBar</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/textMuted</item>
+        <item name="android:fontFamily">@font/manrope</item>
+    </style>
+
+    <style name="AppBar" parent="android:Widget.Material.ActionBar.Solid">
+        <item name="android:background">@color/bar</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:titleTextStyle">@style/AppBarTitle</item>
+    </style>
+</resources>

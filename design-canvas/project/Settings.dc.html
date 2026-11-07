@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Job Crawler settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 2800px; box-sizing: border-box; background: {{t.bg}}; color: {{t.text}}; font-family: Roboto, system-ui, sans-serif; display: flex; flex-direction: column">
+
+<header style="height: 56px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 16px 0 4px; background: {{t.bar}}; border-bottom: 1px solid {{t.border}}">
+<a href="Main.dc.html" aria-label="Back" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: {{t.text}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
+</a>
+<h1 style="margin: 0; font-size: 20px; font-weight: 500; color: {{t.text}}">Settings</h1>
+</header>
+
+<main style="flex-grow: 1; padding: 8px 16px 24px; display: flex; flex-direction: column">
+
+<h2 style="margin: 16px 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">SCHEDULE</h2>
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 4px 16px">
+<div style="min-height: 56px; display: flex; align-items: center; gap: 12px">
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px">Look for jobs</span>
+<span style="font-size: 13px; color: {{t.muted}}">Only while the phone is online</span>
+</span>
+<button role="switch" aria-checked="true" aria-label="Look for jobs" style="width: 52px; height: 32px; border: 0; border-radius: 16px; background: {{t.primary}}; padding: 4px; display: flex; justify-content: flex-end">
+<span style="width: 24px; height: 24px; border-radius: 12px; background: {{t.onPrimary}}"></span>
+</button>
+</div>
+<div style="height: 1px; background: {{t.border}}"></div>
+<label style="min-height: 56px; display: flex; align-items: center; gap: 12px">
+<span style="flex-grow: 1; font-size: 16px">Every</span>
+<select style="height: 40px; border: 1px solid {{t.border}}; border-radius: 10px; background: {{t.surface}}; color: {{t.text}}; font: 15px Roboto, sans-serif; padding: 0 12px">
+<option>15 minutes</option>
+<option selected="selected">30 minutes</option>
+<option>1 hour</option>
+<option>2 hours</option>
+<option>3 hours</option>
+<option>6 hours</option>
+<option>12 hours</option>
+</select>
+</label>
+<div style="height: 1px; background: {{t.border}}"></div>
+<div style="padding: 12px 0">
+<button style="width: 100%; height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Run once now</button>
+</div>
+</section>
+
+<h2 style="margin: 24px 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">WHAT TO SEARCH</h2>
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<span style="font-size: 16px; font-weight: 500">Keywords</span>
+<button style="border: 0; background: transparent; color: {{t.softText}}; font: 500 14px Roboto, sans-serif; padding: 6px 0">Edit</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{keywords}}" as="k" hint-placeholder-count="9">
+<span style="font-size: 13px; color: {{t.text}}; background: {{t.bg}}; border: 1px solid {{t.border}}; border-radius: 100px; padding: 6px 12px">{{k}}</span>
+</sc-for>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: {{t.muted}}">Keywords only widen the search. The filters decide what reaches you.</p>
+<sc-for list="{{searchLists}}" as="l" hint-placeholder-count="3">
+<div style="border-top: 1px solid {{t.border}}; padding-top: 12px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="flex-grow: 1; font-size: 16px; font-weight: 500">{{l.title}}</span>
+<sc-if value="{{l.edited}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 12px; font-weight: 500; color: {{t.softText}}; background: {{t.soft}}; border-radius: 100px; padding: 3px 10px">Edited</span>
+</sc-if>
+<button onClick="{{l.edit}}" style="border: 0; background: transparent; color: {{t.softText}}; font: 500 14px Roboto, sans-serif; padding: 6px 0 6px 8px">Edit</button>
+</div>
+<span style="font-size: 13px; line-height: 18px; color: {{t.muted}}">{{l.caption}}</span>
+<sc-if value="{{l.closed}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+<sc-for list="{{l.shown}}" as="e" hint-placeholder-count="4">
+<span style="font-size: 13px; color: {{t.text}}; background: {{t.bg}}; border: 1px solid {{t.border}}; border-radius: 100px; padding: 6px 12px">{{e}}</span>
+</sc-for>
+<sc-if value="{{l.hasMore}}" hint-placeholder-val="{{ false }}">
+<button onClick="{{l.edit}}" style="font: 500 13px Roboto, sans-serif; color: {{t.softText}}; background: {{t.soft}}; border: 0; border-radius: 100px; padding: 6px 12px">{{l.more}}</button>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{l.open}}" hint-placeholder-val="{{ false }}">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: {{t.muted}}; margin-top: 4px">One per line; matched as whole words, in any case
+<textarea value="{{l.text}}" onInput="{{l.typed}}" rows="7" style="box-sizing: border-box; width: 100%; resize: none; border: 2px solid {{t.primary}}; border-radius: 12px; background: {{t.surface}}; color: {{t.text}}; font: 14px/21px Roboto, sans-serif; padding: 10px 12px"></textarea>
+</label>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<button onClick="{{l.save}}" style="height: 44px; border: 0; border-radius: 12px; background: {{t.primary}}; color: {{t.onPrimary}}; font: 500 15px Roboto, sans-serif">Save</button>
+<button onClick="{{l.reset}}" style="height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Reset</button>
+<button onClick="{{l.cancel}}" style="height: 44px; border: 0; border-radius: 12px; background: transparent; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Cancel</button>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</section>
+
+<section style="margin-top: 12px; background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 4px 16px">
+<sc-for list="{{sources}}" as="s" hint-placeholder-count="7">
+<div style="min-height: 60px; display: flex; align-items: center; gap: 12px; border-top: {{s.line}}">
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px">{{s.name}}</span>
+<span style="font-size: 13px; color: {{t.muted}}">{{s.note}}</span>
+</span>
+<button role="switch" aria-checked="{{s.on}}" aria-label="{{s.name}}" onClick="{{s.toggle}}" style="width: 52px; height: 32px; border: 0; border-radius: 16px; background: {{s.track}}; padding: 4px; display: flex; justify-content: {{s.align}}">
+<span style="width: 24px; height: 24px; border-radius: 12px; background: {{s.knob}}"></span>
+</button>
+</div>
+</sc-for>
+</section>
+
+<h2 style="margin: 24px 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">WHAT REACHES YOU</h2>
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{filterLists}}" as="l" hint-placeholder-count="5">
+<div style="border-top: {{l.line}}; padding-top: 12px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="flex-grow: 1; font-size: 16px; font-weight: 500">{{l.title}}</span>
+<sc-if value="{{l.edited}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 12px; font-weight: 500; color: {{t.softText}}; background: {{t.soft}}; border-radius: 100px; padding: 3px 10px">Edited</span>
+</sc-if>
+<button onClick="{{l.edit}}" style="border: 0; background: transparent; color: {{t.softText}}; font: 500 14px Roboto, sans-serif; padding: 6px 0 6px 8px">Edit</button>
+</div>
+<span style="font-size: 13px; line-height: 18px; color: {{t.muted}}">{{l.caption}}</span>
+<sc-if value="{{l.closed}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+<sc-for list="{{l.shown}}" as="e" hint-placeholder-count="4">
+<span style="font-size: 13px; color: {{t.text}}; background: {{t.bg}}; border: 1px solid {{t.border}}; border-radius: 100px; padding: 6px 12px">{{e}}</span>
+</sc-for>
+<sc-if value="{{l.hasMore}}" hint-placeholder-val="{{ false }}">
+<button onClick="{{l.edit}}" style="font: 500 13px Roboto, sans-serif; color: {{t.softText}}; background: {{t.soft}}; border: 0; border-radius: 100px; padding: 6px 12px">{{l.more}}</button>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{l.open}}" hint-placeholder-val="{{ false }}">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: {{t.muted}}; margin-top: 4px">One per line; matched as whole words, in any case
+<textarea value="{{l.text}}" onInput="{{l.typed}}" rows="7" style="box-sizing: border-box; width: 100%; resize: none; border: 2px solid {{t.primary}}; border-radius: 12px; background: {{t.surface}}; color: {{t.text}}; font: 14px/21px Roboto, sans-serif; padding: 10px 12px"></textarea>
+</label>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<button onClick="{{l.save}}" style="height: 44px; border: 0; border-radius: 12px; background: {{t.primary}}; color: {{t.onPrimary}}; font: 500 15px Roboto, sans-serif">Save</button>
+<button onClick="{{l.reset}}" style="height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Reset</button>
+<button onClick="{{l.cancel}}" style="height: 44px; border: 0; border-radius: 12px; background: transparent; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Cancel</button>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</section>
+
+<h2 style="margin: 24px 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">APPLYING</h2>
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="min-height: 60px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid {{t.border}}">
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px">Notify me of each new job</span>
+<span style="font-size: 13px; color: {{t.muted}}">With an Apply button that copies the cover note</span>
+</span>
+<button role="switch" aria-checked="true" aria-label="Notify me of each new job" style="width: 52px; height: 32px; border: 0; border-radius: 16px; background: {{t.primary}}; padding: 4px; display: flex; justify-content: flex-end; flex-shrink: 0">
+<span style="width: 24px; height: 24px; border-radius: 12px; background: {{t.onPrimary}}"></span>
+</button>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: {{t.muted}}">Name
+<input type="text" value="[YOUR NAME]" style="height: 48px; box-sizing: border-box; border: 1px solid {{t.border}}; border-radius: 12px; background: {{t.surface}}; color: {{t.text}}; font: 16px Roboto, sans-serif; padding: 0 14px">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: {{t.muted}}">Phone
+<input type="tel" value="[YOUR PHONE]" style="height: 48px; box-sizing: border-box; border: 1px solid {{t.border}}; border-radius: 12px; background: {{t.surface}}; color: {{t.text}}; font: 16px Roboto, sans-serif; padding: 0 14px">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: {{t.muted}}">About you, for the cover note
+<textarea rows="4" style="box-sizing: border-box; border: 1px solid {{t.border}}; border-radius: 12px; background: {{t.surface}}; color: {{t.text}}; font: 15px/21px Roboto, sans-serif; padding: 12px 14px; resize: none">I'm a backend developer working mainly with PHP/Laravel and Node.js, building REST APIs and the databases behind them. I also build frontends as an AI-assisted frontend developer.</textarea>
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500; color: {{t.muted}}">Never email
+<input type="text" placeholder="Companies, domains or addresses, comma separated" style="height: 48px; box-sizing: border-box; border: 1px solid {{t.border}}; border-radius: 12px; background: {{t.surface}}; color: {{t.text}}; font: 15px Roboto, sans-serif; padding: 0 14px">
+</label>
+<div style="display: flex; align-items: center; gap: 12px; background: {{t.bg}}; border-radius: 12px; padding: 12px">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: {{t.badSoft}}; color: {{t.bad}}; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+</span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 15px; font-weight: 500">[YOUR CV].pdf</span>
+<span style="font-size: 12px; color: {{t.muted}}">Attached to every CV email</span>
+</span>
+<button style="border: 0; background: transparent; color: {{t.softText}}; font: 500 14px Roboto, sans-serif; padding: 8px 4px">Replace</button>
+</div>
+<button style="height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Send a test email to myself</button>
+</section>
+
+<h2 style="margin: 24px 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">BACKUP</h2>
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<span style="margin-top: 5px; width: 10px; height: 10px; border-radius: 5px; background: {{t.warn}}; flex-shrink: 0"></span>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: {{t.text}}"><strong style="font-weight: 500">Off.</strong> Choose a folder once, and the app copies its database there after every run. After a reinstall, choosing the same folder brings everything back.</p>
+</div>
+<button style="height: 48px; border: 0; border-radius: 12px; background: {{t.primary}}; color: {{t.onPrimary}}; font: 500 15px Roboto, sans-serif">Choose backup folder</button>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button disabled="disabled" style="height: 44px; border: 0; border-radius: 12px; background: {{t.bg}}; color: {{t.muted}}; font: 500 15px Roboto, sans-serif">Back up now</button>
+<button style="height: 44px; border: 0; border-radius: 12px; background: {{t.soft}}; color: {{t.softText}}; font: 500 15px Roboto, sans-serif">Restore a file</button>
+</div>
+</section>
+
+<h2 style="margin: 24px 4px 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: {{t.muted}}">CONNECTIONS</h2>
+<section style="background: {{t.surface}}; border: 1px solid {{t.border}}; border-radius: 16px; padding: 4px 16px">
+<sc-for list="{{connections}}" as="c" hint-placeholder-count="3">
+<div style="min-height: 64px; display: flex; align-items: center; gap: 12px; border-top: {{c.line}}">
+<span style="width: 24px; height: 24px; border-radius: 12px; background: {{c.chipBg}}; color: {{c.chipText}}; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+</span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px">{{c.name}}</span>
+<span style="font-size: 13px; color: {{t.muted}}">{{c.note}}</span>
+</span>
+<button style="border: 0; background: transparent; color: {{t.softText}}; font: 500 14px Roboto, sans-serif; padding: 8px 4px">{{c.action}}</button>
+</div>
+</sc-for>
+</section>
+
+<p style="margin: 20px 4px 0; font-size: 12px; color: {{t.muted}}; text-align: center">Job Crawler 1.0.26</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":2800}}'>
+class Component extends DCLogic {
+  theme(dark) {
+    if (dark) {
+      return { bg: '#0F1318', bar: '#151A21', surface: '#1A2029', border: '#2A323D', text: '#E6EAF0', muted: '#9AA5B4', primary: '#6FA3F8', onPrimary: '#0B1A33', soft: '#1F2B3E', softText: '#9CC0FB', good: '#5AD394', goodSoft: '#17322A', warn: '#F0B65A', warnSoft: '#33280F', bad: '#F49A92', badSoft: '#3A1E1D' };
+    }
+    return { bg: '#F2F4F8', bar: '#FFFFFF', surface: '#FFFFFF', border: '#E1E6EE', text: '#1B2430', muted: '#5F6B7A', primary: '#1F6FEB', onPrimary: '#FFFFFF', soft: '#E8F0FE', softText: '#1A5BC4', good: '#137A4A', goodSoft: '#E3F5EC', warn: '#8A5200', warnSoft: '#FDF1DE', bad: '#B93A31', badSoft: '#FBE7E5' };
+  }
+  renderVals() {
+    const t = this.theme(this.props.dark ?? false);
+    const off = (this.state && this.state.off) || {};
+    const list = [
+      ['linkedin_jobs', 'LinkedIn jobs', 'Every run · last hour only'],
+      ['wuzzuf', 'Wuzzuf', 'Every run'],
+      ['tanqeeb', 'Tanqeeb', 'Every run · includes Bayt'],
+      ['workable', 'Workable', 'Every run'],
+      ['recruitera', 'Recruitera', 'Every 3 h · Paymob, Fawry and more'],
+      ['ats', 'Company boards', 'Every 3 h · Lever, Greenhouse and more'],
+      ['posts', 'LinkedIn hiring posts', 'Daily after 07:00 · paid search']
+    ];
+    const s = this.state || {};
+    const lists = s.lists || {};
+    const defaults = {
+      places: ['Egypt', 'Cairo, Egypt', 'Giza, Egypt'],
+      postKeywords: ['Laravel', 'Full Stack', 'Backend', 'Node.js', 'Software Engineer'],
+      postPlaces: ['Egypt', 'Cairo', 'New Cairo', 'Giza', 'Maadi', 'Dokki', 'Nasr City', 'Heliopolis', 'Sheikh Zayed', '6th of October'],
+      tech: ['laravel', 'node', 'nodejs', 'node.js', 'php', 'backend', 'back-end', 'back end', 'golang', 'go lang', 'go developer', 'go engineer', 'go programming', 'go language', 'support'],
+      titles: ['laravel', 'php', 'symfony', 'codeigniter', 'backend', 'back-end', 'server side', 'node', 'nestjs', 'express', 'full stack', 'fullstack', 'mern', 'software engineer', 'software developer', 'web developer', 'application developer', 'api developer', 'application support', 'golang'],
+      senior: ['senior', 'sr', 'lead', 'principal', 'staff', 'staff engineer', 'founding', 'head of', 'director', 'manager', 'architect', 'vp', 'chief', 'expert'],
+      egypt: ['egypt', 'cairo', 'new cairo', 'fifth settlement', 'nasr city', 'heliopolis', 'maadi', 'giza', 'dokki', 'mohandessin', '6th of october', 'sheikh zayed', 'smart village', 'alexandria', 'مصر', 'القاهرة'],
+      blocked: ['india', 'bengaluru', 'bangalore', 'hyderabad', 'mumbai', 'pune', 'pakistan', 'karachi', 'lahore', 'nigeria', 'lagos']
+    };
+    const row = (key, title, caption, i) => {
+      const entries = lists[key] || defaults[key];
+      const open = s.editing === key;
+      return {
+        title, caption,
+        line: i === 0 ? '0' : '1px solid ' + t.border,
+        edited: !!lists[key],
+        open, closed: !open,
+        shown: entries.slice(0, 10),
+        hasMore: entries.length > 10,
+        more: '+' + (entries.length - 10) + ' more',
+        text: s.draft ?? entries.join('\n'),
+        typed: (e) => this.setState({ draft: e.target.value }),
+        edit: () => this.setState({ editing: key, draft: null }),
+        cancel: () => this.setState({ editing: null, draft: null }),
+        reset: () => { const next = { ...lists }; delete next[key]; this.setState({ lists: next, editing: null, draft: null }); },
+        save: () => {
+          const parsed = (s.draft ?? entries.join('\n')).split('\n').map((x) => x.trim()).filter(Boolean);
+          const next = { ...lists };
+          if (parsed.length && parsed.join('\n') !== defaults[key].join('\n')) next[key] = parsed; else delete next[key];
+          this.setState({ lists: next, editing: null, draft: null });
+        }
+      };
+    };
+    return {
+      t,
+      searchLists: [
+        row('places', 'Places to search', 'LinkedIn jobs is searched in each of these', 0),
+        row('postKeywords', 'Post keywords', 'Hiring posts, once a day. Each keyword × place is one paid Serper search', 1),
+        row('postPlaces', 'Post places', 'Each post keyword is searched with each of these', 2)
+      ],
+      filterLists: [
+        row('tech', 'Stack', 'A job has to mention one of these', 0),
+        row('titles', 'Role in the title', 'A job\'s title has to contain one of these', 1),
+        row('senior', 'Too senior', 'A title with one of these is dropped', 2),
+        row('egypt', 'Counts as Egypt', 'A posting naming one of these is in Egypt', 3),
+        row('blocked', 'Never these places', 'A job placed in one of these is dropped', 4)
+      ],
+      keywords: ['Laravel Developer', 'Node.js Developer', 'Backend Developer', 'PHP Developer', 'Full Stack Developer', 'Application Support', 'Application Developer', 'Golang Developer', 'Go Developer'],
+      sources: list.map(([key, name, note], i) => {
+        const on = !off[key];
+        return {
+          name, note,
+          on: on ? 'true' : 'false',
+          line: i === 0 ? '0' : '1px solid ' + t.border,
+          track: on ? t.primary : t.border,
+          knob: on ? t.onPrimary : t.surface,
+          align: on ? 'flex-end' : 'flex-start',
+          toggle: () => this.setState({ off: { ...off, [key]: on } })
+        };
+      }),
+      connections: [
+        { name: 'Telegram channel', note: 'Connected · every match is posted', action: 'Test', chipBg: t.goodSoft, chipText: t.good, line: '0' },
+        { name: 'Gmail for CV emails', note: 'Sends from [YOUR GMAIL]', action: 'Test', chipBg: t.goodSoft, chipText: t.good, line: '1px solid ' + t.border },
+        { name: 'Battery', note: 'Unrestricted · runs stay on time', action: 'Open', chipBg: t.goodSoft, chipText: t.good, line: '1px solid ' + t.border }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Lets the app ask once to be exempt from battery optimisation. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- The Apply notifications; asked for on Android 13 and later. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Installing a newer build of itself, downloaded from the Drive folder (Updater). -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- A run works in the foreground, under a quiet notice, so phone cleaners leave it alone (CrawlWorker). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- Android 14+: special use, because Android 15 stops dataSync after 6 h a day (stop code -128). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- The notification's Apply button: copies the note, opens the job, and is gone. -->
+        <activity
+            android:name=".ApplyActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.NoDisplay" />
+
+        <!-- Jobs that give an address, each sent or ignored by hand, and one job's description. -->
+        <activity
+            android:name=".ReviewActivity"
+            android:exported="false"
+            android:label="Jobs to email"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- A LinkedIn post shared from its app, or pasted: read, kept, and emailed on a tap. -->
+        <activity
+            android:name=".AddPostActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".JobsActivity"
+            android:exported="false"
+            android:label="Jobs found" />
+        <activity
+            android:name=".JobActivity"
+            android:exported="false"
+            android:label="Job" />
+        <activity
+            android:name=".RejectionsActivity"
+            android:exported="false"
+            android:label="Why jobs were dropped" />
+
+        <!-- Everything set once: schedule, search, applying, backup, connections. -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="Settings"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- The scraping log, with Refresh, Copy and Clear. -->
+        <activity
+            android:name=".LogActivity"
+            android:exported="false"
+            android:label="Scraping log" />
+
+        <!-- The system installer's answer to an update: its confirmation screen, or why it failed. -->
+        <receiver
+            android:name=".UpdateReceiver"
+            android:exported="false" />
+
+        <!--
+            WorkManager's own service for foreground work. Special use on Android 14+:
+            dataSync is cut off after 6 h a day on Android 15, and a run every 15 min
+            uses that up by the afternoon. dataSync stays for Android 10-13.
+            The property is the reason Android (and Play, if ever published) asks for.
+        -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync|specialUse"
+            tools:node="merge">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Scheduled job search the user starts and controls: each run fetches job boards and sends matches to the user's own Telegram channel, then stops." />
+        </service>
+
+        <!-- What's new: every update to the app, from the commit history. -->
+        <activity
+            android:name=".ChangesActivity"
+            android:exported="false"
+            android:label="What's new" />
+    </application>
+</manifest>

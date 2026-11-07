@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="24dp">
+
+        <TextView style="@style/SectionLabel" android:layout_marginTop="12dp" android:text="Schedule" />
+
+        <LinearLayout style="@style/Card" android:layout_marginTop="0dp" android:paddingVertical="4dp">
+
+            <Switch android:id="@+id/scheduleOn" style="@style/SwitchRow" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Every"
+                    android:textColor="@color/text"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/interval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:background="@drawable/field"
+                    android:paddingHorizontal="12dp" />
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" />
+
+            <Button
+                android:id="@+id/runNow"
+                style="@style/ButtonSoft"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:text="Run once now" />
+        </LinearLayout>
+
+        <TextView style="@style/SectionLabel" android:text="What to search" />
+
+        <LinearLayout style="@style/Card" android:layout_marginTop="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Keywords" />
+
+                <Button
+                    android:id="@+id/editKeywords"
+                    style="@style/FilterChip"
+                    android:background="@android:color/transparent"
+                    android:text="Edit"
+                    android:textColor="@color/softText" />
+            </LinearLayout>
+
+            <com.jobcrawler.app.FlowLayout
+                android:id="@+id/keywordChips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                style="@style/Caption"
+                android:layout_marginTop="12dp"
+                android:text="Keywords only widen the search. The filters decide what reaches you." />
+
+            <!-- Places and hiring-post searches: filled in code from Criteria. -->
+            <LinearLayout
+                android:id="@+id/searchLists"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/Card" android:paddingVertical="4dp">
+            <Switch android:id="@+id/srcLinkedin" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcWuzzuf" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcTanqeeb" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcDrJob" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcWorkable" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcCareers" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcRecruitera" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcAts" style="@style/SwitchRow" />
+            <!-- OFF (2026-11-05): AiData stays off. -->
+            <!-- <Switch android:id="@+id/srcAiData" style="@style/SwitchRow" /> -->
+            <!-- Worldwide remote sources (back on). -->
+            <Switch android:id="@+id/srcJobright" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcRelocate" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcRemoteFeeds" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcJobgether" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcHn" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcSponsors" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcJobApis" style="@style/SwitchRow" />
+            <!-- Arabic freelance gigs (Region.FREELANCE). -->
+            <Switch android:id="@+id/srcMostaql" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcKhamsat" style="@style/SwitchRow" />
+            <!-- OFF (2026-11-05): LinkedIn worldwide job search stays off.
+            <Switch android:id="@+id/srcLinkedinWorldwide" style="@style/SwitchRow" />
+            -->
+            <!-- OFF (2026-11-05): LinkedIn posts and the Serper sources.
+            <Switch android:id="@+id/srcPosts" style="@style/SwitchRow" />
+            <Switch android:id="@+id/srcGlassdoor" style="@style/SwitchRow" />
+            -->
+            <!-- Not a source: Saudi/UAE on the boards and ATS sources above. -->
+            <Switch android:id="@+id/boardsGulf" style="@style/SwitchRow" />
+            <!-- OFF (2026-11-05): Serper source.
+            <Switch android:id="@+id/srcGulfPosts" style="@style/SwitchRow" />
+            -->
+        </LinearLayout>
+
+        <!-- One switch per remote job feed: filled in code from RemoteFeeds.TOGGLEABLE. -->
+        <TextView style="@style/SectionLabel" android:text="Remote job feeds" />
+
+        <LinearLayout
+            android:id="@+id/feedSwitches"
+            style="@style/Card"
+            android:layout_marginTop="0dp"
+            android:paddingVertical="4dp" />
+
+        <TextView style="@style/SectionLabel" android:text="Career sites" />
+
+        <LinearLayout style="@style/Card" android:layout_marginTop="0dp">
+
+            <TextView
+                style="@style/Caption"
+                android:layout_marginTop="0dp"
+                android:text="Companies' own careers pages. A site's first run records the jobs already open; after that, each new one is sent." />
+
+            <LinearLayout
+                android:id="@+id/careerSiteList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/addCareerSite"
+                style="@style/ButtonSoft"
+                android:layout_marginBottom="4dp"
+                android:text="Add a careers site" />
+        </LinearLayout>
+
+        <TextView style="@style/SectionLabel" android:text="What reaches you" />
+
+        <!-- The filter lists: filled in code from Criteria. -->
+        <LinearLayout
+            android:id="@+id/filterLists"
+            style="@style/Card"
+            android:layout_marginTop="0dp"
+            android:paddingTop="0dp" />
+
+        <TextView style="@style/SectionLabel" android:text="Ranking and muting" />
+
+        <!-- Experience cap, digest mode and the muted list: filled in code. -->
+        <LinearLayout
+            android:id="@+id/tuning"
+            style="@style/Card" />
+
+        <TextView style="@style/SectionLabel" android:text="Applying" />
+
+        <LinearLayout style="@style/Card" android:layout_marginTop="0dp" android:paddingTop="4dp">
+
+            <Switch android:id="@+id/applyNotify" style="@style/SwitchRow" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" />
+
+            <TextView style="@style/Label" android:text="Name" />
+            <EditText android:id="@+id/applyName" style="@style/Field" android:inputType="textPersonName" />
+
+            <TextView style="@style/Label" android:text="Phone" />
+            <EditText android:id="@+id/applyPhone" style="@style/Field" android:inputType="phone" />
+
+            <TextView style="@style/Label" android:text="About you, for the cover note" />
+            <EditText
+                android:id="@+id/applyPitch"
+                style="@style/Field"
+                android:gravity="top"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="3" />
+
+            <TextView style="@style/Label" android:text="Never email" />
+            <EditText
+                android:id="@+id/applyNever"
+                style="@style/Field"
+                android:hint="Companies, domains or addresses, comma separated"
+                android:inputType="textMultiLine" />
+
+            <TextView style="@style/Label" android:text="Gmail that sends your CV" />
+            <EditText
+                android:id="@+id/applyGmail"
+                style="@style/Field"
+                android:hint="you@gmail.com"
+                android:inputType="textEmailAddress" />
+
+            <TextView style="@style/Label" android:text="Gmail app password" />
+            <EditText
+                android:id="@+id/applyAppPassword"
+                style="@style/Field"
+                android:hint="16 letters, from myaccount.google.com/apppasswords"
+                android:inputType="textPassword" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/divider" />
+
+            <!-- Saudi & UAE: its own lane, in its own colour. -->
+            <TextView
+                style="@style/SectionLabel"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="0dp"
+                android:paddingStart="0dp"
+                android:text="Saudi &amp; UAE"
+                android:textColor="@color/gulf" />
+
+            <Switch android:id="@+id/applyGulfAuto" style="@style/SwitchRow" />
+
+            <TextView style="@style/Label" android:text="Gmail for Saudi &amp; UAE (optional)" />
+            <EditText
+                android:id="@+id/applyGulfGmail"
+                style="@style/Field"
+                android:hint="Blank: sent from the Gmail above"
+                android:inputType="textEmailAddress" />
+
+            <TextView style="@style/Label" android:text="Its app password" />
+            <EditText
+                android:id="@+id/applyGulfAppPassword"
+                style="@style/Field"
+                android:hint="16 letters, from myaccount.google.com/apppasswords"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/testGulfEmail"
+                style="@style/ButtonSoft"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/gulfSoft"
+                android:text="Send a test from the Saudi &amp; UAE Gmail"
+                android:textColor="@color/gulf" />
+
+            <Switch android:id="@+id/applyAbroadAuto" style="@style/SwitchRow" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/inset"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_bad"
+                    android:importantForAccessibility="no"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_file"
+                    android:tint="@color/bad" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/applyCv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="middle"
+                        android:fontFamily="@font/manrope_bold"
+                        android:singleLine="true"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        style="@style/Caption"
+                        android:text="Attached to every CV email"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/chooseCv"
+                    style="@style/FilterChip"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/softText" />
+            </LinearLayout>
+
+            <Button android:id="@+id/testEmail" style="@style/ButtonSoft" android:text="Send a test email to myself" />
+        </LinearLayout>
+
+        <TextView style="@style/SectionLabel" android:text="Backup" />
+
+        <LinearLayout style="@style/Card" android:layout_marginTop="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/backupDot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/dot" />
+
+                <TextView
+                    android:id="@+id/backupStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:lineSpacingMultiplier="1.15"
+                    android:textColor="@color/text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Button android:id="@+id/chooseBackup" style="@style/ButtonPrimary" android:text="Choose backup folder" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/backupNow"
+                    style="@style/ButtonSoft"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Back up now" />
+
+                <Button
+                    android:id="@+id/restoreBackup"
+                    style="@style/ButtonSoft"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="Restore a file" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView style="@style/SectionLabel" android:text="Connections" />
+
+        <LinearLayout
+            android:id="@+id/connections"
+            style="@style/Card"
+            android:layout_marginTop="0dp"
+            android:paddingVertical="4dp" />
+
+        <TextView
+            android:id="@+id/version"
+            style="@style/Caption"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>

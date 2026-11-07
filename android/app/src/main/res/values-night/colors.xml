@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#5ED3A0</color>
+    <color name="onPrimary">#052117</color>
+    <color name="background">#0B0F0D</color>
+    <color name="bar">#0B0F0D</color>
+    <color name="surface">#141A17</color>
+    <color name="divider">#27302C</color>
+    <color name="track">#1C2420</color>
+    <color name="text">#E8EEEA</color>
+    <color name="textMuted">#9BA8A1</color>
+    <color name="soft">#173328</color>
+    <color name="softText">#8FE3BE</color>
+    <color name="good">#5ED3A0</color>
+    <color name="goodSoft">#173328</color>
+    <color name="warn">#F2B657</color>
+    <color name="warnSoft">#33270F</color>
+    <color name="bad">#F59A90</color>
+    <color name="badSoft">#3A1B19</color>
+    <color name="gulf">#B9BFFF</color>
+    <color name="gulfSoft">#23264A</color>
+    <color name="hero">#141A17</color>
+    <color name="heroLine">#2C3732</color>
+    <color name="heroTile">#1C2420</color>
+    <color name="heroText">#E8EEEA</color>
+    <color name="heroMuted">#9BA8A1</color>
+    <color name="heroAccent">#5ED3A0</color>
+    <color name="heroOnAccent">#052117</color>
+    <color name="heroWarn">#F2B657</color>
+    <color name="heroGulf">#B9BFFF</color>
+    <color name="heroBad">#F59A90</color>
+</resources>
