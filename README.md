@@ -581,8 +581,8 @@ other and you will get every job twice.
 | `wuzzuf` | wuzzuf.net **sitemap** + job pages | **On, but not in the hosted schedule** (job pages answer 403 to datacenter IPs): Egypt and Saudi listings. Search pages are behind Cloudflare and are never requested |
 | `tanqeeb` | Tanqeeb search, one site per country | **On, but not in the hosted schedule** (serves pages with no jobs to datacenter IPs): Egypt + the Gulf (`TANQEEB_SITES`). Aggregator — carries **Bayt**, LinkedIn, Wuzzuf and Naukri Gulf listings |
 | `naukrigulf` | naukrigulf.com **JSON endpoint** | **On, but not in the hosted schedule** (never answers datacenter IPs): Gulf markets. One request per keyword, nothing opened per posting |
-| `x_posts` | Hiring posts on X, via a search index (Serper) | **Off**: same target as `linkedin_posts`, daily. Snippet only; see [Hiring posts on X](#hiring-posts-on-x) |
-| `x_session` | X's own search, signed in by cookie | **Off**: needs a throwaway account's cookies. Every 6 hours; see [Hiring posts on X](#hiring-posts-on-x) |
+| `x_posts` | Hiring posts on X, via a search index (Serper) | **On**: same target as `linkedin_posts`, daily (`CRAWL_DAILY_SOURCES`), under `SERPER_DAILY_CAP`. Snippet only; see [Hiring posts on X](#hiring-posts-on-x) |
+| `x_session` | X's own search, signed in by cookie | **On, inert without cookies**: needs a throwaway account's `X_AUTH_TOKEN` / `X_CT0`. Every 6 hours (`x_session:6`); see [Hiring posts on X](#hiring-posts-on-x) |
 | `recruitera` | app.recruitera.ai **public JSON API** | **On**: tech jobs located in Egypt or the Gulf, at every employer on Recruitera. On start, then every 24 hours; see [Recruitera](#recruitera) |
 | `workable` | jobs.workable.com **JSON search** | **On**: every Workable customer's jobs in Egypt and the Gulf, one request per keyword x country. Hourly (periodic lane, `workable:1`); `WORKABLE_*` |
 | `vertex` | vertextech-eg.com **sitemap** + vacancy pages | **On**: VerteX Technologies' (Smart Village) vacancies. Undated, so the first run records what is open without sending and later runs send only vacancies not listed before. Hourly (periodic lane, `vertex:1`); `VERTEX_*` |
@@ -606,7 +606,7 @@ the container's periodic lane at the app's rhythm:
 | `mostaql`, `khamsat` | The Arabic freelance boards' listings | **On, but not in the hosted schedule** (they answer a datacenter IP with a 202 bot challenge): gigs naming the CV's stack in English or Arabic, posted under `#Freelance` |
 | `career_sites` | Any company's careers sitemap + job pages | **On once `CAREER_SITES` names a site** (`id\|Company\|sitemap URL\|job URL regex[\|Location[\|Market]]`): JSON-LD or the page's heading and main text; a site's first run records what is open and sends none of it |
 | `linkedin_worldwide` | LinkedIn guest search, Worldwide + remote | **On**, as in the app; hourly in the container's periodic lane (it spends the Egypt search's LinkedIn patience): jobs open to anyone or to EMEA/Africa/Egypt |
-| `glassdoor` | Glassdoor listings found on Google (Serper) | **Off**, as in the app: 8 paid searches a run (10 with `BOARDS_GULF`) under `SERPER_DAILY_CAP` |
+| `glassdoor` | Glassdoor listings found on Google (Serper) | **On**, as in the app, daily (`CRAWL_DAILY_SOURCES`): 8 paid searches a run (10 with `BOARDS_GULF`) under `SERPER_DAILY_CAP` |
 
 **Jobs abroad** (every worldwide source above) are kept only when remote and
 open to Egypt, or visa-sponsored; in English (no "German C1 required"); not

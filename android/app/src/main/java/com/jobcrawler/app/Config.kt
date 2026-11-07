@@ -43,13 +43,15 @@ object Defaults {
     /* Saudi Arabia and the UAE, searched on LinkedIn by gulf_jobs and posted to Telegram under #Gulf. */
     val gulfLocations = listOf("Saudi Arabia", "United Arab Emirates")
 
-    // Worldwide and Gulf search on, LinkedIn's included. Still off: "linkedin_posts", "glassdoor",
-    // "gulf_posts", "ai_data" (posts and the paid Serper sources).
+    // Every source is on: Worldwide and Gulf search (LinkedIn's included), the posts and paid Serper
+    // sources (under the Serper daily cap) and AI data labelling.
     val sources = listOf(
         "linkedin_jobs", "wuzzuf", "tanqeeb", "workable", "careers", "recruitera", "ats", "drjob",
         "jobright", "relocateme", "remote_feeds", "jobgether", "hn_hiring", "sponsor_boards", "job_apis",
         // LinkedIn worldwide (remote, open to anyone or EMEA/Egypt) and LinkedIn Saudi & UAE.
         "linkedin_worldwide", "gulf_jobs",
+        // Hiring posts and Glassdoor through Google (paid, capped), Saudi & UAE posts, AI data labelling.
+        "linkedin_posts", "glassdoor", "gulf_posts", "ai_data",
         // Arabic freelance gigs (Region.FREELANCE).
         "mostaql", "khamsat",
     )

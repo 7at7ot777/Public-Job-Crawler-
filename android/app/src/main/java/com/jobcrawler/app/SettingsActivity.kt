@@ -115,8 +115,7 @@ class SettingsActivity : Screen() {
             CareerSites.KEY to findViewById(R.id.srcCareers),
             Recruitera.KEY to findViewById(R.id.srcRecruitera),
             Ats.KEY to findViewById(R.id.srcAts),
-            // OFF (2026-11-05): AiData stays off (switch commented out in activity_settings.xml too).
-            // AiData.KEY to findViewById(R.id.srcAiData),
+            AiData.KEY to findViewById(R.id.srcAiData),
             // Worldwide remote sources (back on).
             Jobright.KEY to findViewById(R.id.srcJobright),
             RelocateMe.KEY to findViewById(R.id.srcRelocate),
@@ -131,10 +130,10 @@ class SettingsActivity : Screen() {
             // LinkedIn worldwide and LinkedIn Saudi & UAE: back on.
             LinkedInWorldwide.KEY to findViewById(R.id.srcLinkedinWorldwide),
             LinkedInJobs.GULF_KEY to findViewById(R.id.srcGulfJobs),
-            // OFF (2026-11-05): LinkedIn posts and the Serper sources (switches commented out in activity_settings.xml too).
-            // LinkedInPosts.KEY to findViewById(R.id.srcPosts),
-            // Glassdoor.KEY to findViewById(R.id.srcGlassdoor),
-            // LinkedInPosts.GULF_KEY to findViewById(R.id.srcGulfPosts),
+            // LinkedIn posts and the Serper sources (paid, under the Serper daily cap).
+            LinkedInPosts.KEY to findViewById(R.id.srcPosts),
+            Glassdoor.KEY to findViewById(R.id.srcGlassdoor),
+            LinkedInPosts.GULF_KEY to findViewById(R.id.srcGulfPosts),
         )
         groupSourcesByRegion()
 

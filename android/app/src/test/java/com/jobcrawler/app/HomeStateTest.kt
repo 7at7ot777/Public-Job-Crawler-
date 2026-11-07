@@ -48,11 +48,11 @@ class HomeStateTest {
 
     @Test
     fun `the slow and paid sets come from the registry`() {
-        // OFF (2026-11-05): no source is on the Serper lane.
-        assertEquals(emptySet<String>(), HomeState.PAID_SOURCES)
+        // The paid Serper sources are back on.
+        assertEquals(setOf("linkedin_posts", "glassdoor", "gulf_posts"), HomeState.PAID_SOURCES)
         // The 3-hour slow lane: the worldwide SLOW sources and LinkedIn Saudi & UAE. Recruitera is every 6 h, on its own.
         assertEquals(
-            setOf("relocateme", "remote_feeds", "jobgether", "sponsor_boards", "gulf_jobs"),
+            setOf("relocateme", "remote_feeds", "jobgether", "sponsor_boards", "gulf_jobs", "ai_data"),
             HomeState.SLOW_SOURCES,
         )
     }

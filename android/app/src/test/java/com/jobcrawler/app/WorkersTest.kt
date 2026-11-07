@@ -52,9 +52,8 @@ class WorkersTest {
     }
 
     @Test
-    fun `no source is on the Serper lane while posts and Serper are off`() {
-        // OFF (2026-11-05): linkedin_posts, gulf_posts and glassdoor are retired.
-        assertTrue(Pipeline.keysOn(Pipeline.Lane.SERPER).isEmpty())
+    fun `the posts and Glassdoor share the Serper lane`() {
+        assertEquals(setOf("linkedin_posts", "glassdoor", "gulf_posts"), Pipeline.keysOn(Pipeline.Lane.SERPER))
     }
 
     @Test

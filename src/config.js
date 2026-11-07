@@ -728,8 +728,9 @@ export const config = {
      * x_session below is the other one.
      */
     x_posts: {
-      // Off by default: every keyword x location pair is another paid query.
-      enabled: bool(process.env.X_POSTS_ENABLED, false),
+      // On: every keyword x location pair is a paid query, run once a day
+      // (CRAWL_DAILY_SOURCES) under SERPER_DAILY_CAP. X_POSTS_ENABLED=false turns it off.
+      enabled: bool(process.env.X_POSTS_ENABLED, true),
       keywords: list(process.env.X_POSTS_KEYWORDS, postKeywords),
       locations: list(process.env.X_POSTS_LOCATIONS, postLocations),
       // Daily, with linkedin_posts, for the same reason: billed per query,
@@ -778,8 +779,8 @@ export const config = {
      * client names which one broke instead of reporting an empty crawl.
      */
     x_session: {
-      // Also off whenever either cookie is missing; see isEnabled().
-      enabled: bool(process.env.X_SESSION_ENABLED, false),
+      // On, but inert whenever either cookie is missing; see isEnabled().
+      enabled: bool(process.env.X_SESSION_ENABLED, true),
       authToken: (process.env.X_AUTH_TOKEN ?? '').trim(),
       ct0: (process.env.X_CT0 ?? '').trim(),
       keywords: list(process.env.X_SESSION_KEYWORDS, postKeywords),
@@ -943,9 +944,10 @@ export const config = {
      * location filter picks out of one unfiltered page just as well.
      */
     naukrigulf: {
-      // Off: Gulf listings, and the search is Egypt only. Placed by
-      // FILTER_LOCATIONS when turned on, since the search names no country.
-      enabled: bool(process.env.NAUKRIGULF_ENABLED, false),
+      // On. Placed by FILTER_LOCATIONS, since the search names no country.
+      // Blocks datacentre IPs, so it is not in the hosted lanes: it works from
+      // a residential IP (--source naukrigulf).
+      enabled: bool(process.env.NAUKRIGULF_ENABLED, true),
       searchUrl:
         process.env.NAUKRIGULF_SEARCH_URL || 'https://www.naukrigulf.com/spapi/jobapi/search',
       /*
@@ -1507,11 +1509,11 @@ export const config = {
 
     /*
      * Glassdoor listings through Google (Serper): eight paid searches a run
-     * (ten with BOARDS_GULF), under SERPER_DAILY_CAP. Off by default, as in
-     * the Android app; run it once a day (CRAWL_DAILY_SOURCES).
+     * (ten with BOARDS_GULF), under SERPER_DAILY_CAP. On, as in the Android
+     * app, once a day (CRAWL_DAILY_SOURCES); inert without SERPER_API_KEY.
      */
     glassdoor: {
-      enabled: bool(process.env.GLASSDOOR_ENABLED, false),
+      enabled: bool(process.env.GLASSDOOR_ENABLED, true),
       cron: process.env.GLASSDOOR_CRON || '10 7 * * *',
     },
 

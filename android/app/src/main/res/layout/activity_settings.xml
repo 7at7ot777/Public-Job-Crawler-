@@ -104,8 +104,7 @@
             <Switch android:id="@+id/srcCareers" style="@style/SwitchRow" />
             <Switch android:id="@+id/srcRecruitera" style="@style/SwitchRow" />
             <Switch android:id="@+id/srcAts" style="@style/SwitchRow" />
-            <!-- OFF (2026-11-05): AiData stays off. -->
-            <!-- <Switch android:id="@+id/srcAiData" style="@style/SwitchRow" /> -->
+            <Switch android:id="@+id/srcAiData" style="@style/SwitchRow" />
             <!-- Worldwide remote sources (back on). -->
             <Switch android:id="@+id/srcJobright" style="@style/SwitchRow" />
             <Switch android:id="@+id/srcRelocate" style="@style/SwitchRow" />
@@ -120,15 +119,12 @@
             <!-- LinkedIn worldwide and LinkedIn Saudi & UAE (back on). -->
             <Switch android:id="@+id/srcLinkedinWorldwide" style="@style/SwitchRow" />
             <Switch android:id="@+id/srcGulfJobs" style="@style/SwitchRow" />
-            <!-- OFF (2026-11-05): LinkedIn posts and the Serper sources.
+            <!-- LinkedIn posts and the Serper sources (paid, capped). -->
             <Switch android:id="@+id/srcPosts" style="@style/SwitchRow" />
             <Switch android:id="@+id/srcGlassdoor" style="@style/SwitchRow" />
-            -->
             <!-- Not a source: Saudi/UAE on the boards and ATS sources above. -->
             <Switch android:id="@+id/boardsGulf" style="@style/SwitchRow" />
-            <!-- OFF (2026-11-05): Serper source.
             <Switch android:id="@+id/srcGulfPosts" style="@style/SwitchRow" />
-            -->
         </LinearLayout>
 
         <!-- One switch per remote job feed: filled in code from RemoteFeeds.TOGGLEABLE. -->

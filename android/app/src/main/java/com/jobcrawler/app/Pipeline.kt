@@ -181,17 +181,15 @@ class Pipeline(
             // Dr.Job: Egypt, and Saudi/UAE with boardsGulf, posted like Egypt's.
             Spec(DrJob.KEY, null) { current -> DrJob(gulf = current.boardsGulf) },
             Spec(LinkedInJobs.KEY, LinkedInJobs.EVERY_MS / 60_000, lanes = setOf(Lane.LINKEDIN)) { _ -> LinkedInJobs() },
-            // OFF (2026-11-05): LinkedIn posts and every Serper source are disabled. Uncomment to bring them back
-            // (and drop their keys from RETIRED below).
-            // Spec(LinkedInPosts.KEY, 60, lanes = setOf(Lane.LINKEDIN, Lane.SERPER)) { current -> LinkedInPosts(dailyCap = current.serperDailyCap, grouped = current.postsGrouped) },
+            // LinkedIn hiring posts through Google (Serper): daily after 07:00, under the Serper daily cap.
+            Spec(LinkedInPosts.KEY, 60, lanes = setOf(Lane.LINKEDIN, Lane.SERPER)) { current -> LinkedInPosts(dailyCap = current.serperDailyCap, grouped = current.postsGrouped) },
             // Glassdoor through Google: daily, eight paid searches (ten with Saudi/UAE) under the same Serper cap.
-            // Spec(Glassdoor.KEY, 60, lanes = setOf(Lane.SERPER)) { current -> Glassdoor(dailyCap = current.serperDailyCap, gulf = current.boardsGulf) },
+            Spec(Glassdoor.KEY, 60, lanes = setOf(Lane.SERPER)) { current -> Glassdoor(dailyCap = current.serperDailyCap, gulf = current.boardsGulf) },
             Spec(Recruitera.KEY, Recruitera.EVERY_MS / 60_000) { current -> Recruitera(gulf = current.boardsGulf) },
             // Named companies' career boards, twice a day.
             Spec(Ats.KEY, Ats.EVERY_MS / 60_000) { current -> Ats(gulf = current.boardsGulf) },
             // AI data labelling and assessment (audio, images, Arabic text), every 3 hours.
-            // OFF (2026-11-05): AiData stays off; uncomment (and drop it from RETIRED) to bring it back.
-            // Spec(AiData.KEY, SLOW) { _ -> AiData() },
+            Spec(AiData.KEY, SLOW) { _ -> AiData() },
             // Worldwide remote sources (back on): remote-from-anywhere or visa jobs that fit the CV.
             // US listings, hourly: remote-from-anywhere or visa-sponsored jobs that fit the CV.
             Spec(Jobright.KEY, 60, home = Region.WORLDWIDE) { _ -> Jobright() },
@@ -216,8 +214,7 @@ class Pipeline(
             // LinkedIn jobs in Saudi Arabia and the UAE (Criteria GULF_SEARCH_PLACES), every 3 hours over the last day: posted to Telegram under #Gulf.
             Spec(LinkedInJobs.GULF_KEY, SLOW, home = Region.GULF, lanes = setOf(Lane.LINKEDIN)) { _ -> LinkedInJobs.gulf() },
             // Saudi and UAE hiring posts: emailed, never posted.
-            // OFF (2026-11-05): Serper source, disabled with LinkedIn posts. Gulf jobs come from the boards above (boardsGulf).
-            // Spec(LinkedInPosts.GULF_KEY, 60, home = Region.GULF, lanes = setOf(Lane.LINKEDIN, Lane.SERPER)) { _ -> LinkedInPosts.gulf() },
+            Spec(LinkedInPosts.GULF_KEY, 60, home = Region.GULF, lanes = setOf(Lane.LINKEDIN, Lane.SERPER)) { _ -> LinkedInPosts.gulf() },
         )
 
         /*
@@ -226,12 +223,6 @@ class Pipeline(
          */
         val RETIRED: Map<String, Region> = mapOf(
             AbroadJobs.KEY to Region.WORLDWIDE,
-            // OFF (2026-11-05): LinkedIn posts and the Serper sources.
-            LinkedInPosts.KEY to Region.EGYPT,
-            Glassdoor.KEY to Region.EGYPT,
-            LinkedInPosts.GULF_KEY to Region.GULF,
-            // Its registry home was Egypt (Region.MOSTLY_REMOTE still places its stored rows).
-            AiData.KEY to Region.EGYPT,
         )
 
         const val SLOW = Limits.SLOW_SOURCE_EVERY_MS / 60_000
